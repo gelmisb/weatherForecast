@@ -128,13 +128,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } catch (final JSONException e) {
                     // Catching exceptions and notifying the user that an exception has occurred
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    Log.e(TAG, "JSON parsing error: " + e.getMessage());
 
                     // This is not to occupy the current thread
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Sorry, error occurred! \n Try again", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -142,13 +142,13 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 // Catching exceptions and notifying the user that an exception has occurred
-                Log.e(TAG, "Couldn't get json from server.");
+                Log.e(TAG, "Couldn't get JSON from server.");
 
                 // This is not to occupy the current thread
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "Couldn't get json from server. Check LogCat for possible errors!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Sorry, error occurred! \n Try again", Toast.LENGTH_LONG).show();
                     }
                 });
             }
