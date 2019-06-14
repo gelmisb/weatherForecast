@@ -26,7 +26,9 @@ cache:
 
 language: android
 jdk:
-  - oraclejdk8
+    - oraclejdk8
+    - oraclejdk9
+    - openjdk8
 
 env:
  global:
@@ -68,11 +70,3 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-$ANDROID_API_LEVEL
-  
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep_history: true
-  on:
-    branch: master
