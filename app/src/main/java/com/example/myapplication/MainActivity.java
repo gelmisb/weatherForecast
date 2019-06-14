@@ -57,20 +57,8 @@ public class MainActivity extends AppCompatActivity {
         //  Fixed Portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        initialiseVars();
 
-        // Views for details
-        city = findViewById(R.id.cityText);
-        submit = findViewById(R.id.submit);
-        lv =  findViewById(R.id.list);
-
-
-        // Too many arrayLists - other option was HashSet<String, String, String, String, String> hashSet
-        currentArrayList = new ArrayList<>();
-        minTempArrayList = new ArrayList<>();
-        maxTempArrayList = new ArrayList<>();
-        descriptionArrayList = new ArrayList<>();
-        mainArrayList = new ArrayList<>();
-        imageArrayList = new ArrayList<>();
 
         // Executing the thread
         new GetResponse().execute();
@@ -84,6 +72,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Method created solely for cleaner code
+     */
+    private void initialiseVars() {
+        // Views for details
+        city = findViewById(R.id.cityText);
+        submit = findViewById(R.id.submit);
+        lv =  findViewById(R.id.list);
+
+        // Too many arrayLists - other option was HashSet<String, String, String, String, String> hashSet
+        currentArrayList = new ArrayList<>();
+        minTempArrayList = new ArrayList<>();
+        maxTempArrayList = new ArrayList<>();
+        descriptionArrayList = new ArrayList<>();
+        mainArrayList = new ArrayList<>();
+        imageArrayList = new ArrayList<>();
+    }
 
     /**
      *  Method that uses AsyncTask to assign a thread to download the data
