@@ -46,6 +46,12 @@ public class CurrentWeather extends AppCompatActivity {
         //  Fixed Portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        // 1. Create a request to get the weather updates
+        // 2. Add the data and parse the JSON
+        // 3. Put the data into the fields
+        // 4. Customization will follow
+        // 5. Submit
+
 
     }
 }
