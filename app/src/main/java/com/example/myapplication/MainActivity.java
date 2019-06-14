@@ -6,10 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText city;
     private Button submit;
 
-    private ArrayList<HashMap<String, String>> contactList;
     private ListView lv;
     private LoadList adapter;
     private ArrayList<String> currentArrayList, minTempArrayList,maxTempArrayList, mainArrayList, descriptionArrayList, imageArrayList;
@@ -39,9 +33,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Views for details
         city = findViewById(R.id.cityText);
         submit = findViewById(R.id.submit);
+        lv =  findViewById(R.id.list);
 
+
+        // Too many arrayLists - other option was HashSet<String, String, String, String, String> hashSet
         currentArrayList = new ArrayList<>();
         minTempArrayList = new ArrayList<>();
         maxTempArrayList = new ArrayList<>();
@@ -49,13 +47,14 @@ public class MainActivity extends AppCompatActivity {
         mainArrayList = new ArrayList<>();
         imageArrayList = new ArrayList<>();
 
-
-        lv =  findViewById(R.id.list);
-
+        // Executing the thread
         new GetResponse().execute();
+
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // @TODO --- The on click will show execute the method to initiate the 16 weather forecast for the selected city
             }
         });
     }
@@ -70,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             Toast.makeText(MainActivity.this,"Json Data is downloading",Toast.LENGTH_LONG).show();
+            // @TODO Need to add a progress bar / spinner to show that the download is progressing
         }
+
 
         @Override
         protected Void doInBackground(Void... arg0) {
@@ -99,27 +100,23 @@ public class MainActivity extends AppCompatActivity {
                     // Looping through all contacts
                     for (int i = 0; i < contacts.length(); i++) {
 
+                        // Creating a JSONObject to extract data
                         JSONObject c = contacts.getJSONObject(i);
                         JSONObject temp = c.getJSONObject("temp");
 
-                        Log.i("Day1", temp.get("day") + " ");
-                        Log.i("Day2", temp.get("min") + " ");
-                        Log.i("Day3", temp.get("max") + " ");
-
+                        // Retrieving strings from the JSONObject
                         String current = temp.getString("day");
                         String minTemp = temp.getString("min");
                         String maxTemp = temp.getString("max");
 
+                        // A JSONArray is present that has series of JSONObjects that need to be extracted
                         JSONArray weather1 = c.getJSONArray("weather");
                         JSONObject weather = weather1.getJSONObject(0);
 
+                        // Retrieving strings from the JSONObject
                         String main = weather.getString("main");
                         String description = weather.getString("description");
                         String images = weather.getString("icon");
-
-                        // tmp hash map for single contact
-
-
 
                         // adding each child node to HashMap key => value
                         currentArrayList.add(current);
@@ -128,48 +125,47 @@ public class MainActivity extends AppCompatActivity {
                         mainArrayList.add(main);
                         descriptionArrayList.add(description);
                         imageArrayList.add(images);
-
-//                         adding contact to contact list
-//                        contactList.add(contact);
                     }
                 } catch (final JSONException e) {
+                    // Catching exceptions and notifying the user that an exception has occurred
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
+
+                    // This is not to occupy the current thread
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
-
                 }
 
+
             } else {
+                // Catching exceptions and notifying the user that an exception has occurred
                 Log.e(TAG, "Couldn't get json from server.");
+
+                // This is not to occupy the current thread
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Couldn't get json from server. Check LogCat for possible errors!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
-
             return null;
         }
 
+
+        // When the application finished downloading
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
+            // Custom list adapter for weather details
+            // This takes in multiple arrayLists and then parses the details into the views accordingly
             adapter = new LoadList(MainActivity.this, currentArrayList, minTempArrayList, maxTempArrayList, mainArrayList, descriptionArrayList, imageArrayList, R.layout.list );
 
-//            ListAdapter adapter = new SimpleAdapter(MainActivity.this, contactList,
-//                    R.layout.item_layout, new String[]{ "Current: " + "current" + "C", "main", "Low: " +"minTemp", "high: " +"maxTemp", "description"},
-//                    new int[]{R.id.current, R.id.weather, R.id.minTemp, R.id.maxTemp, R.id.description});
-
+            // Setting the custom adapter for the listView
             lv.setAdapter(adapter);
         }
     }
