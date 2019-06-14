@@ -2,7 +2,12 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class CurrentWeather extends AppCompatActivity {
@@ -20,6 +25,27 @@ public class CurrentWeather extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Making it full screen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // inside your activity (if you did not enable transitions in your theme)
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
+        // set an exit transition
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Slide());
+        }
+
+        // Setting flags from previous iinstance
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // Set current layout
         setContentView(R.layout.activity_current_weather);
+
+        //  Fixed Portrait orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
     }
 }

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/gelmisb/wetaherForecast.svg?branch=master)](https://travis-ci.com/gelmisb/wetaherForecast)
+[![Build Status](https://travis-ci.com/gelmisb/weatherForecast.svg?branch=master)](https://travis-ci.com/gelmisb/weatherForecast)
 
 
 # Weather Forecast application
