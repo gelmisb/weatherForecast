@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/gelmisb/wetaherForecast.svg?branch=master)](https://travis-ci.com/gelmisb/wetaherForecast)
+
+
 # Weather Forecast application
 
 ## Application written in Java using Android studio.
