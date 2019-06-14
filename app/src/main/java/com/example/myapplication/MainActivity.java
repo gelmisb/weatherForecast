@@ -6,14 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
         submit = findViewById(R.id.submit);
         contactList = new ArrayList<>();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        lv = (ListView) findViewById(R.id.list);
+        lv =  findViewById(R.id.list);
 
         new GetResponse().execute();
         submit.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     *  Method that uses AsyncTask to assign a thread to download the data
+     *  and parse it using JSONObject and JSONArray
+     */
     private class GetResponse extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -59,61 +62,59 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,"Json Data is downloading",Toast.LENGTH_LONG).show();
         }
 
-
-
         @Override
         protected Void doInBackground(Void... arg0) {
+
+            // Handler class allows to execute the URL and to get data
             HttpHandler sh = new HttpHandler();
+
+            // !!!!!  THIS IS FOR 16 DAYS IN DUBLIN THE URL IS NOT DYNAMIC YET  !!!!!
             // Making a request to url and getting response
             String url = "https://jsonp.afeld.me/?url=https%3A%2F%2Fapi.openweathermap.org%2Fdata%2F2.5%2Fforecast%2Fdaily%3Fq%3DDublin%26mode%3Djson%26units%3Dmetric%26cnt%3D7%26appid%3Dae3723984918e29156906ffa2182bf02";
+
+            // Putting the URL into the handler class to execute
             String jsonStr = sh.makeServiceCall(url);
 
-            Log.e(TAG, "Response from url: " + jsonStr);
+            // If the response is not null
             if (jsonStr != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
 
+                // This is JSON parsing, the try block is necessary to catch any possible exceptions
+                try {
+                    // Creating an initial JSON object from the retrieved results
+                    JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
                     JSONArray contacts = jsonObj.getJSONArray("list");
 
-                    // looping through All Contacts
+                    // Looping through all contacts
                     for (int i = 0; i < contacts.length(); i++) {
 
-                        Log.i("!!!!!!!!!", jsonObj.getString("message") + " ");
                         JSONObject c = contacts.getJSONObject(i);
-                        String id = c.getString("dt");
                         JSONObject temp = c.getJSONObject("temp");
 
                         Log.i("Day1", temp.get("day") + " ");
                         Log.i("Day2", temp.get("min") + " ");
                         Log.i("Day3", temp.get("max") + " ");
-                        Log.i("Day4", temp.get("night") + " ");
-                        Log.i("Day5", temp.get("eve") + " ");
-                        Log.i("Day6", temp.get("morn") + " ");
 
+                        String current = temp.getString("day");
+                        String minTemp = temp.getString("min");
+                        String maxTemp = temp.getString("max");
 
+                        JSONArray weather1 = c.getJSONArray("weather");
+                        JSONObject weather = weather1.getJSONObject(0);
 
-
-                        String name = c.getString("cnt");
-                        String email = c.getString("list");
-                        String address = c.getString("country");
-                        String gender = c.getString("gender");
-
-                        // Phone node is JSON Object
-                        JSONObject phone = c.getJSONObject("phone");
-                        String mobile = phone.getString("mobile");
-                        String home = phone.getString("home");
-                        String office = phone.getString("office");
+                        String main = weather.getString("main");
+                        String description = weather.getString("description");
 
                         // tmp hash map for single contact
                         HashMap<String, String> contact = new HashMap<>();
 
                         // adding each child node to HashMap key => value
-                        contact.put("id", id);
-                        contact.put("name", name);
-                        contact.put("email", email);
-                        contact.put("mobile", mobile);
+                        contact.put("current", current);
+                        contact.put("minTemp", minTemp);
+                        contact.put("maxTemp", maxTemp);
+                        contact.put("main", main);
+                        contact.put("description", description);
 
                         // adding contact to contact list
                         contactList.add(contact);
@@ -150,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             ListAdapter adapter = new SimpleAdapter(MainActivity.this, contactList,
-                    R.layout.item_layout, new String[]{ "list","name"},
-                    new int[]{R.id.id, R.id.name});
+                    R.layout.item_layout, new String[]{ "day","main"},
+                    new int[]{R.id.current, R.id.weather});
             lv.setAdapter(adapter);
         }
     }
