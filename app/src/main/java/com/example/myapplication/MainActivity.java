@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<HashMap<String, String>> contactList;
     private ListView lv;
+    private LoadList adapter;
+    private ArrayList<String> currentArrayList, minTempArrayList,maxTempArrayList, mainArrayList, descriptionArrayList, imageArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
         city = findViewById(R.id.cityText);
         submit = findViewById(R.id.submit);
-        contactList = new ArrayList<>();
+
+        currentArrayList = new ArrayList<>();
+        minTempArrayList = new ArrayList<>();
+        maxTempArrayList = new ArrayList<>();
+        descriptionArrayList = new ArrayList<>();
+        mainArrayList = new ArrayList<>();
+        imageArrayList = new ArrayList<>();
+
 
         lv =  findViewById(R.id.list);
 
@@ -70,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
             // !!!!!  THIS IS FOR 16 DAYS IN DUBLIN THE URL IS NOT DYNAMIC YET  !!!!!
             // Making a request to url and getting response
-            String url = "https://jsonp.afeld.me/?url=https%3A%2F%2Fapi.openweathermap.org%2Fdata%2F2.5%2Fforecast%2Fdaily%3Fq%3DDublin%26mode%3Djson%26units%3Dmetric%26cnt%3D7%26appid%3Dae3723984918e29156906ffa2182bf02";
+            String url = "https://jsonp.afeld.me/?url=https%3A%2F%2Fapi.openweathermap.org%2Fdata%2F2.5%2Fforecast%2Fdaily%3Fq%3DDublin%26mode%3Djson%26units%3Dmetric%26cnt%3D16%26appid%3Dae3723984918e29156906ffa2182bf02";
 
             // Putting the URL into the handler class to execute
             String jsonStr = sh.makeServiceCall(url);
@@ -105,19 +115,22 @@ public class MainActivity extends AppCompatActivity {
 
                         String main = weather.getString("main");
                         String description = weather.getString("description");
+                        String images = weather.getString("icon");
 
                         // tmp hash map for single contact
-                        HashMap<String, String> contact = new HashMap<>();
+
+
 
                         // adding each child node to HashMap key => value
-                        contact.put("current", current);
-                        contact.put("minTemp", minTemp);
-                        contact.put("maxTemp", maxTemp);
-                        contact.put("main", main);
-                        contact.put("description", description);
+                        currentArrayList.add(current);
+                        minTempArrayList.add(minTemp);
+                        maxTempArrayList.add(maxTemp);
+                        mainArrayList.add(main);
+                        descriptionArrayList.add(description);
+                        imageArrayList.add(images);
 
-                        // adding contact to contact list
-                        contactList.add(contact);
+//                         adding contact to contact list
+//                        contactList.add(contact);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -150,9 +163,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            ListAdapter adapter = new SimpleAdapter(MainActivity.this, contactList,
-                    R.layout.item_layout, new String[]{ "day","main"},
-                    new int[]{R.id.current, R.id.weather});
+
+            adapter = new LoadList(MainActivity.this, currentArrayList, minTempArrayList, maxTempArrayList, mainArrayList, descriptionArrayList, imageArrayList, R.layout.list );
+
+//            ListAdapter adapter = new SimpleAdapter(MainActivity.this, contactList,
+//                    R.layout.item_layout, new String[]{ "Current: " + "current" + "C", "main", "Low: " +"minTemp", "high: " +"maxTemp", "description"},
+//                    new int[]{R.id.current, R.id.weather, R.id.minTemp, R.id.maxTemp, R.id.description});
+
             lv.setAdapter(adapter);
         }
     }
