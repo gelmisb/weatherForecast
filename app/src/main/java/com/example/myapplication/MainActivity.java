@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-//        api.openweathermap.org/data/2.5/forecast/daily?q=dublin,units=metric&cnt=16&appidae3723984918e29156906ffa2182bf02
 
         @Override
         protected Void doInBackground(Void... arg0) {
