@@ -76,7 +76,6 @@ public class LoadList extends ArrayAdapter<String> {
             // Used Picasso Library to download images, refactor images and to add them to imageViews
             Picasso.get()
                     .load("https://openweathermap.org/img/w/" + imageArray.get(position) + ".png")
-                    .centerCrop()
                     .into(imageView);
         }
 
