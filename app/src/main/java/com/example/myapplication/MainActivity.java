@@ -59,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         //  Fixed Portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        // Initialising the variables
-        initialiseVars();
+        // Views for details
+        city = findViewById(R.id.cityText);
+        submit = findViewById(R.id.submit);
+        listView =  findViewById(R.id.list);
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Executing the thread
                     cityText = city.getText().toString();
-                    new GetWeather(MainActivity.this, getApplicationContext(), cityText, listView).execute();
+                    new GetWeather(MainActivity.this, getApplicationContext(), cityText, listView, "16 days").execute();
                 }
             }
         });
@@ -83,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
      * Method created solely for cleaner code
      */
     private void initialiseVars() {
-        // Views for details
-        city = findViewById(R.id.cityText);
-        submit = findViewById(R.id.submit);
-        listView =  findViewById(R.id.list);
+
     }
 }

@@ -1,14 +1,30 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.transition.Slide;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class CurrentWeather extends AppCompatActivity {
 
@@ -20,6 +36,7 @@ public class CurrentWeather extends AppCompatActivity {
 
 
     private TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, desctiptionText;
+    AppLocationService appLocationService;
 
 
     @Override
@@ -55,6 +72,29 @@ public class CurrentWeather extends AppCompatActivity {
         // 5. Submit
 
 
+//        new GetWeather(CurrentWeather.this, getApplicationContext(), cityText, listView, "16 days").execute();
+
+
+
+
+        appLocationService = new AppLocationService(
+                CurrentWeather.this, CurrentWeather.this);
+
+        Location location = appLocationService
+                .getLocation(LocationManager.GPS_PROVIDER);
+
+        //you can hard-code the lat & long if you have issues with getting it
+        //remove the below if-condition and use the following couple of lines
+        //double latitude = 37.422005;
+        //double longitude = -122.084095
+
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+
+            Log.i("Lat", latitude + " ");
+            Log.i("Lon", longitude + " ");
+        }
     }
 
 
@@ -66,4 +106,6 @@ public class CurrentWeather extends AppCompatActivity {
         phraseText = findViewById(R.id.phraseText);
         desctiptionText = findViewById(R.id.desc);
     }
+
+
 }
