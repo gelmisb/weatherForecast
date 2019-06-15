@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private LoadList adapter;
     private ArrayList<String> currentArrayList, minTempArrayList,maxTempArrayList, mainArrayList, descriptionArrayList, imageArrayList;
 
+    private String cityText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +42,17 @@ public class MainActivity extends AppCompatActivity {
         // Making it full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        // inside your activity (if you did not enable transitions in your theme)
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
-        // set an exit transition
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            // inside your activity (if you did not enable transitions in your theme)
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
+            // set an exit transition
             getWindow().setExitTransition(new Slide());
         }
 
-        // Setting flags from previous iinstance
+        // Setting flags from previous instance
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // Set current layout
@@ -57,17 +61,21 @@ public class MainActivity extends AppCompatActivity {
         //  Fixed Portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        // Initialising the variables
         initialiseVars();
-
-
-        // Executing the thread
-        new GetResponse().execute();
 
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // @TODO --- The on click will show execute the method to initiate the 16 weather forecast for the selected city
+
+                // If there is text within the field
+                if(city.getText() != null) {
+
+                    // Executing the thread
+                    cityText = city.getText().toString();
+                    new GetResponse().execute();
+                }
             }
         });
     }
@@ -103,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             // @TODO Need to add a progress bar / spinner to show that the download is progressing
         }
 
-
         @Override
         protected Void doInBackground(Void... arg0) {
 
@@ -112,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
             // !!!!!  THIS IS FOR 16 DAYS IN DUBLIN THE URL IS NOT DYNAMIC YET  !!!!!
             // Making a request to url and getting response
-            String url = "https://jsonp.afeld.me/?url=https%3A%2F%2Fapi.openweathermap.org%2Fdata%2F2.5%2Fforecast%2Fdaily%3Fq%3DDublin%26mode%3Djson%26units%3Dmetric%26cnt%3D16%26appid%3Dae3723984918e29156906ffa2182bf02";
+            String url = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + cityText + "&units=metric&cnt=16&appid=ae3723984918e29156906ffa2182bf02";
 
             // Putting the URL into the handler class to execute
             String jsonStr = sh.makeServiceCall(url);
