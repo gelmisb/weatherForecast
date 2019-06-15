@@ -19,7 +19,7 @@ public class CurrentWeather extends AppCompatActivity {
     // forecast
 
 
-    private TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText;
+    private TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, desctiptionText;
 
 
     @Override
@@ -46,6 +46,8 @@ public class CurrentWeather extends AppCompatActivity {
         //  Fixed Portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        initialiseVars();
+
         // 1. Create a request to get the weather updates
         // 2. Add the data and parse the JSON
         // 3. Put the data into the fields
@@ -53,5 +55,15 @@ public class CurrentWeather extends AppCompatActivity {
         // 5. Submit
 
 
+    }
+
+
+    private void initialiseVars() {
+        currentTempText = findViewById(R.id.currentTemp);
+        cityNameText = findViewById(R.id.city);
+        timeText = findViewById(R.id.time);
+        dateText = findViewById(R.id.dateText);
+        phraseText = findViewById(R.id.phraseText);
+        desctiptionText = findViewById(R.id.desc);
     }
 }

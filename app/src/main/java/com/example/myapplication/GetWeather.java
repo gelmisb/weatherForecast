@@ -18,14 +18,15 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
 
     private Activity activity;
     private Context context;
-    private String city;
+    private String city, type;
     private ListView listView;
 
-    public GetWeather(Activity activity, Context context, String city, ListView listView) {
+    public GetWeather(Activity activity, Context context, String city, ListView listView, String type) {
         this.context = context;
         this.city = city;
         this.activity = activity;
         this.listView = listView;
+        this.type = type;
     }
 
     /**
@@ -52,12 +53,20 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
     @Override
     protected Void doInBackground(Void... arg0) {
 
-
         // Handler class allows to execute the URL and to get data
         HttpHandler sh = new HttpHandler();
 
-        // Making a request to url and getting response
-        String url = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&units=metric&cnt=16&appid=ae3723984918e29156906ffa2182bf02";
+        // Initialising string for type
+        String url = "";
+
+        // If the query is for either current or 16 day forecast
+        if(type.equals("current")){
+            // Making a request to url and getting response
+            url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=ae3723984918e29156906ffa2182bf02";
+        } else {
+            // Making a request to url and getting response
+            url = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&units=metric&cnt=16&appid=ae3723984918e29156906ffa2182bf02";
+        }
 
         // Putting the URL into the handler class to execute
         String jsonStr = sh.makeServiceCall(url);
