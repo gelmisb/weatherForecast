@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -16,17 +17,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcel;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public class CurrentWeather extends AppCompatActivity {
+public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted{
 
     // @TODO In this Activity it should display the current weather of the current location
     // When the user will try to see another city,
@@ -35,7 +40,7 @@ public class CurrentWeather extends AppCompatActivity {
     // forecast
 
 
-    private TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, desctiptionText;
+    public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, desctiptionText;
     AppLocationService appLocationService;
 
 
@@ -47,14 +52,12 @@ public class CurrentWeather extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // inside your activity (if you did not enable transitions in your theme)
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-
-        // set an exit transition
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
             getWindow().setExitTransition(new Slide());
         }
 
-        // Setting flags from previous iinstance
+        // Setting flags from previous instance
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // Set current layout
@@ -65,28 +68,11 @@ public class CurrentWeather extends AppCompatActivity {
 
         initialiseVars();
 
-        // 1. Create a request to get the weather updates
-        // 2. Add the data and parse the JSON
-        // 3. Put the data into the fields
-        // 4. Customization will follow
-        // 5. Submit
-
-
-//        new GetWeather(CurrentWeather.this, getApplicationContext(), cityText, listView, "16 days").execute();
-
-
-
-
         appLocationService = new AppLocationService(
                 CurrentWeather.this, CurrentWeather.this);
 
         Location location = appLocationService
                 .getLocation(LocationManager.GPS_PROVIDER);
-
-        //you can hard-code the lat & long if you have issues with getting it
-        //remove the below if-condition and use the following couple of lines
-        //double latitude = 37.422005;
-        //double longitude = -122.084095
 
         if (location != null) {
             double latitude = location.getLatitude();
@@ -94,6 +80,7 @@ public class CurrentWeather extends AppCompatActivity {
 
             Log.i("Lat", latitude + " ");
             Log.i("Lon", longitude + " ");
+            new GetWeather(CurrentWeather.this, getApplicationContext(), latitude, longitude, "current", CurrentWeather.this).execute();
         }
     }
 
@@ -108,4 +95,37 @@ public class CurrentWeather extends AppCompatActivity {
     }
 
 
+//
+//                    all.add(main);
+//                    all.add(description);
+//                    all.add(images);
+//                    all.add(current);
+//                    all.add(minTemp);
+//                    all.add(maxTemp);
+//                    all.add(speed);
+//                    all.add(deg);
+//                    all.add(cloudsMuch);
+//                    all.add(country);
+//                    all.add(sunrise);
+//                    all.add(sunset);
+//                    all.add(city);
+
+    public void getArrayList(ArrayList<String> arrayList) {
+        if(arrayList != null) {
+            phraseText.setText(arrayList.get(0));
+            desctiptionText.setText(arrayList.get(1));
+            currentTempText.setText(arrayList.get(3));
+            cityNameText.setText(arrayList.get(12));
+
+
+        } else {
+            Toast.makeText(this, "There was a problem with arrayList", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onTaskCompleted(ArrayList<String> response) {
+        Toast.makeText(getApplicationContext(), response.get(0), Toast.LENGTH_LONG).show();
+    }
 }
