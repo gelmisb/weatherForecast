@@ -1,34 +1,24 @@
 package com.example.myapplication;
 
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import com.example.myapplication.Controllers.GetWeather;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = MainActivity.class.getSimpleName();
-
     private EditText city;
     private Button submit;
-
     private ListView listView;
 
     private String cityText;
@@ -64,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         submit = findViewById(R.id.submit);
         listView =  findViewById(R.id.list);
 
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,13 +67,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-
-    /**
-     * Method created solely for cleaner code
-     */
-    private void initialiseVars() {
-
     }
 }

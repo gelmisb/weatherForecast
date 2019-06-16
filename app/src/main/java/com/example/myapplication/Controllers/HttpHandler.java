@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Controllers;
 
 import android.util.Log;
 import java.io.BufferedInputStream;

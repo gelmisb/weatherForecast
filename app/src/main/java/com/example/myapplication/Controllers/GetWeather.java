@@ -1,15 +1,16 @@
-package com.example.myapplication;
+package com.example.myapplication.Controllers;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.myapplication.Model.Weather;
+import com.example.myapplication.OnTaskCompleted;
+import com.example.myapplication.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +61,6 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
     ArrayList<String> descriptionArrayList = new ArrayList<>();
     ArrayList<String> mainArrayList = new ArrayList<>();
     ArrayList<String> imageArrayList = new ArrayList<>();
-    ArrayList<String> all = new ArrayList<>();
 
 
     @Override
@@ -83,14 +83,13 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
         HttpHandler sh = new HttpHandler();
 
         // Initialising string for type
-        String url = "";
+        String url ;
 
         // If the query is for either current or 16 day forecast
         if(type.equals("current")){
 
-            String main, description, images, current, minTemp, maxTemp, speed, deg, cloudsMuch, country, sunrise, sunset, city;
             // Making a request to url and getting response
-            url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=ae3723984918e29156906ffa2182bf02";
+            url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=metric&appid=ae3723984918e29156906ffa2182bf02";
 
             // Putting the URL into the handler class to execute
             String jsonStr = sh.makeServiceCall(url);

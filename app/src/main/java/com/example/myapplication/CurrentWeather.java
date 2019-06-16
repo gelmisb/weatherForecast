@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.pm.ActivityInfo;
 import android.location.Location;
@@ -12,12 +13,12 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.myapplication.Controllers.GetWeather;
 import com.example.myapplication.Location.AppLocationService;
 import com.example.myapplication.Model.Weather;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted{
 
@@ -27,8 +28,9 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     // the application will then send the user to the 16 day
     // forecast
 
-    public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText;
+    public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText, pressureText, humidityText, windText, cloudinessText, countryText, sunriseText, sunsetText;
     private AppLocationService appLocationService;
+    private ConstraintLayout base;
 
 
     @Override
@@ -78,7 +80,15 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         phraseText = findViewById(R.id.phrase);
         descriptionText = findViewById(R.id.desc);
         minTempText = findViewById(R.id.minTempText);
-        maxTempText = findViewById(R.id.maxTemptext);
+        maxTempText = findViewById(R.id.maxTempText);
+        pressureText = findViewById(R.id.pressureText);
+        humidityText = findViewById(R.id.humidityText);
+        windText = findViewById(R.id.windText);
+        cloudinessText = findViewById(R.id.cloudinessText);
+        countryText = findViewById(R.id.country);
+        sunriseText = findViewById(R.id.sunriseText);
+        sunsetText = findViewById(R.id.sunsetText);
+        base = findViewById(R.id.base);
 
         appLocationService = new AppLocationService(
                 CurrentWeather.this, CurrentWeather.this);
@@ -88,29 +98,60 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     @Override
     public void onTaskCompleted(Weather weather) {
 
-        Log.i("Weather", weather.getCity() + " ");
+//        var sec = 1425909686;
+//        var date = new Date(sec * 1000);
+//        var timestr = date.toLocaleTimeString();
 
-//        private String phrase;
-//        private String description;
-//        private String currentTemp;
-//        private String minTemp;
-//        private String maxTemp;
-//        private String pressure;
-//        private String humidity;
-//        private String windSpeed;
-//        private String cloudiness;
-//        private String country;
-//        private String city;
-//        private String sunrise;
-//        private String sunset;
-//        private String icon;
 
+        double temp1 = Double.parseDouble(weather.getSunrise());
+        Date sunDate = new Date((long) (temp1 * 1000));
+        String sunrise = sunDate.getHours() + ":" + sunDate.getMinutes();
+
+        double temp2 = Double.parseDouble(weather.getSunset());
+        Date sunsetDate = new Date((long) (temp2 * 1000));
+        String sunset = sunsetDate.getHours() + ":" + sunsetDate.getMinutes();
+
+        double tempVal = Double.parseDouble(weather.getCurrentTemp());
+        int value = (int) tempVal; // 6 int score = (int) 6.99; // 6
 
         phraseText.setText(weather.getPhrase());
         descriptionText.setText(weather.getDescription());
-        currentTempText.setText(weather.getCurrentTemp());
+        currentTempText.setText(value + "°C");
+        minTempText.setText("Lowest temp.: " + weather.getMinTemp() + "°C");
+        maxTempText.setText("Highest temp.: " + weather.getMaxTemp() + "°C");
+        pressureText.setText("Pressure: " + weather.getPressure() + " hPa");
+        humidityText.setText("Humidity: " + weather.getHumidity() + "%");
+        windText.setText("Wind speed: " + weather.getWindSpeed() + "m/s");
+        cloudinessText.setText("Cloud coverage: " + weather.getCloudiness() + "%");
+        countryText.setText(weather.getCountry());
         cityNameText.setText(weather.getCity());
-        minTempText.setText(weather.getMinTemp());
-        maxTempText.setText(weather.getMaxTemp());
+        sunriseText.setText("Sunrise: " + sunrise);
+        sunsetText.setText("Sunset: " + sunset);
+
+        setWalls(weather.getPhrase());
+
+
     }
+
+    private void setWalls(String type) {
+        if(type.contains("rain")){
+            base.setBackgroundResource(R.drawable.rainy);
+        } else if(type.contains("snow")){
+            base.setBackgroundResource(R.drawable.snowy);
+        } else if(type.contains("clouds")) {
+            base.setBackgroundResource(R.drawable.default_weather);
+        } else {
+            base.setBackgroundResource(R.drawable.cloudy);
+        }
+    }
+    // Credits - rainy.jpg (Photo by Max Bender on Unsplash)
+    // Credits - cloudy.jpg (Photo by John Westrock on Unsplash)
+    // Credits - cloudy2.jpg (Photo by John Westrock on Unsplash)
+    // Credits - sunny.jpg (Photo by Jorge Vasconez on Unsplash)
+    // Credits - snowy.jpg (Photo by Benjamin Raffetseder on Unsplash)
+    // Credits - default.jpg (Photo by Nathan Dumlao on Unsplash)
+
 }
+
+
+
