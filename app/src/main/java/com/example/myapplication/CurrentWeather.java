@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -12,12 +14,14 @@ import android.transition.Slide;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.Controllers.GetWeather;
 import com.example.myapplication.Location.AppLocationService;
 import com.example.myapplication.Model.Weather;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted{
@@ -30,7 +34,9 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
     public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText, pressureText, humidityText, windText, cloudinessText, countryText, sunriseText, sunsetText;
     private AppLocationService appLocationService;
-    private ConstraintLayout base;
+    private FrameLayout base;
+
+    private ArrayList<TextView> allViews;
 
 
     @Override
@@ -55,8 +61,11 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         //  Fixed Portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        // Initialising all the variables
         initialiseVars();
 
+        // Setting the show for the textViews
+        setTextShadow();
 
         Location location = appLocationService
                 .getLocation(LocationManager.GPS_PROVIDER);
@@ -88,32 +97,46 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         countryText = findViewById(R.id.country);
         sunriseText = findViewById(R.id.sunriseText);
         sunsetText = findViewById(R.id.sunsetText);
-        base = findViewById(R.id.base);
+        base = findViewById(R.id.frameLayoutBase);
+        allViews = new ArrayList<>();
+        appLocationService = new AppLocationService(CurrentWeather.this, CurrentWeather.this);
 
-        appLocationService = new AppLocationService(
-                CurrentWeather.this, CurrentWeather.this);
-
+        allViews.add(cityNameText);
+        allViews.add(dateText);
+        allViews.add(descriptionText);
+        allViews.add(minTempText);
+        allViews.add(maxTempText);
+        allViews.add(pressureText);
+        allViews.add(humidityText);
+        allViews.add(windText);
+        allViews.add(cloudinessText);
+        allViews.add(countryText);
+        allViews.add(sunriseText);
+        allViews.add(sunsetText);
+        allViews.add(phraseText);
     }
 
     @Override
     public void onTaskCompleted(Weather weather) {
 
-//        var sec = 1425909686;
-//        var date = new Date(sec * 1000);
-//        var timestr = date.toLocaleTimeString();
+        // Setting the background depending on weather conditions
+        setWalls(weather.getPhrase());
 
-
+        // Reformatting from mills to normal time
         double temp1 = Double.parseDouble(weather.getSunrise());
         Date sunDate = new Date((long) (temp1 * 1000));
         String sunrise = sunDate.getHours() + ":" + sunDate.getMinutes();
 
+        // Reformatting from mills to normal time
         double temp2 = Double.parseDouble(weather.getSunset());
         Date sunsetDate = new Date((long) (temp2 * 1000));
         String sunset = sunsetDate.getHours() + ":" + sunsetDate.getMinutes();
 
+        // Reformatting from double to int
         double tempVal = Double.parseDouble(weather.getCurrentTemp());
-        int value = (int) tempVal; // 6 int score = (int) 6.99; // 6
+        int value = (int) tempVal;
 
+        // Setting the values for the user
         phraseText.setText(weather.getPhrase());
         descriptionText.setText(weather.getDescription());
         currentTempText.setText(value + "°C");
@@ -127,30 +150,51 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         cityNameText.setText(weather.getCity());
         sunriseText.setText("Sunrise: " + sunrise);
         sunsetText.setText("Sunset: " + sunset);
-
-        setWalls(weather.getPhrase());
-
-
     }
 
+
+    /**
+     *
+     * Setting the background of ConstraintLayout
+     * depending on the weather conditions
+     *
+     *
+     * Credits - rainy.jpg (Photo by Max Bender on Unsplash)
+     * Credits - cloudy.jpg (Photo by John Westrock on Unsplash)
+     * Credits - cloudy2.jpg (Photo by John Westrock on Unsplash)
+     * Credits - sunny.jpg (Photo by Jorge Vasconez on Unsplash)
+     * Credits - snowy.jpg (Photo by Benjamin Raffetseder on Unsplash)
+     * Credits - default.jpg (Photo by Nathan Dumlao on Unsplash)
+     * Credits - rainy2.jpg (Photo by Matthew Henry on Unsplash)
+     *
+     * @param type
+     */
     private void setWalls(String type) {
-        if(type.contains("rain")){
+
+        type = "Snow";
+
+        if(type.contains("Rain")){
             base.setBackgroundResource(R.drawable.rainy);
-        } else if(type.contains("snow")){
+        } else if(type.contains("Snow")){
             base.setBackgroundResource(R.drawable.snowy);
-        } else if(type.contains("clouds")) {
-            base.setBackgroundResource(R.drawable.default_weather);
-        } else {
+        } else if(type.contains("Clouds")) {
             base.setBackgroundResource(R.drawable.cloudy);
+        } else {
+            base.setBackgroundResource(R.drawable.default_weather);
         }
     }
-    // Credits - rainy.jpg (Photo by Max Bender on Unsplash)
-    // Credits - cloudy.jpg (Photo by John Westrock on Unsplash)
-    // Credits - cloudy2.jpg (Photo by John Westrock on Unsplash)
-    // Credits - sunny.jpg (Photo by Jorge Vasconez on Unsplash)
-    // Credits - snowy.jpg (Photo by Benjamin Raffetseder on Unsplash)
-    // Credits - default.jpg (Photo by Nathan Dumlao on Unsplash)
 
+    private void setTextShadow() {
+        Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
+        Typeface main = Typeface.createFromAsset(getAssets(),"fonts/Quicksand-Bold.ttf");
+        currentTempText.setTypeface(face);
+        currentTempText.setShadowLayer(5, 8, 8, Color.BLACK);
+
+        for(int i = 0; i < allViews.size(); i++) {
+            allViews.get(i).setShadowLayer(3, 5,5, Color.BLACK);
+            allViews.get(i).setTypeface(face);
+        }
+    }
 }
 
 
