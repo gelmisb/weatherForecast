@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.myapplication.Model.Weather;
-import com.example.myapplication.OnTaskCompleted;
+import com.example.myapplication.Model.OnTaskCompleted;
 import com.example.myapplication.R;
 
 import org.json.JSONArray;

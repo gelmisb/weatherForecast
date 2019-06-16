@@ -1,8 +1,9 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,9 +12,10 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
-import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import com.example.myapplication.Controllers.GetWeather;
 import com.example.myapplication.Controllers.LoadData;
 import com.example.myapplication.Location.AppLocationService;
+import com.example.myapplication.Model.OnTaskCompleted;
 import com.example.myapplication.Model.Weather;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted{
+public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted {
 
     // @TODO In this Activity it should display the current weather of the current location
     // When the user will try to see another city,
@@ -91,8 +94,6 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
-            Log.i("Lat", latitude + " ");
-            Log.i("Lon", longitude + " ");
             new GetWeather(CurrentWeather.this, getApplicationContext(), latitude, longitude, "current", CurrentWeather.this).execute();
         }
     }
@@ -245,14 +246,27 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         LoadData loadData = new LoadData();
 
         // ArrayAdapter necessary to add the cities into the autoText
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (this,android.R.layout.select_dialog_item, loadData.loadArrayData(this));
 
-        autoCitiesText.setThreshold(2);
+
+        autoCitiesText.setThreshold(0);
         autoCitiesText.setAdapter(adapter);
 
+        // When the city is selected
+        autoCitiesText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                // Get the item selected
+                String city = adapterView.getItemAtPosition(i).toString();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        CurrentWeather.this.startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("city", city), ActivityOptions.makeSceneTransitionAnimation(CurrentWeather.this).toBundle());
+                } else {
+                    CurrentWeather.this.startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("city", city));
+                }
+            }
+        });
     }
 }
-
-
-
