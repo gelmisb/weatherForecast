@@ -23,9 +23,6 @@ env:
       - ANDROID_API_LEVEL=29
       - ANDROID_BUILD_TOOLS_VERSION=29.0.0
 
-script:
-   - ./gradlew clean build -i --continue connectedCheck -PdisablePreDex --stacktrace
-
 dist: trusty
 
 android:
