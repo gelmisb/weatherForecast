@@ -25,6 +25,7 @@ env:
 
 script:
    - ./gradlew clean build -i --continue connectedCheck -PdisablePreDex --stacktrace
+   
 android:
  components:
    - tools 
