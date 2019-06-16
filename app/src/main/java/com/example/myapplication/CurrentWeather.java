@@ -14,6 +14,7 @@ import android.transition.Slide;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,9 @@ import com.example.myapplication.Controllers.GetWeather;
 import com.example.myapplication.Location.AppLocationService;
 import com.example.myapplication.Model.Weather;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted{
@@ -37,6 +40,12 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     private FrameLayout base;
 
     private ArrayList<TextView> allViews;
+
+    AutoCompleteTextView autoCitiesText;
+
+    String[] cities = { "Paries,France", "PA,United States","Parana,Brazil",
+            "Padua,Italy", "Pasadena,CA,United States"};
+
 
 
     @Override
@@ -66,6 +75,12 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
         // Setting the show for the textViews
         setTextShadow();
+
+        // Setting the current date
+        setCurrentDate();
+
+        setAutoText();
+
 
         Location location = appLocationService
                 .getLocation(LocationManager.GPS_PROVIDER);
@@ -98,9 +113,12 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         sunriseText = findViewById(R.id.sunriseText);
         sunsetText = findViewById(R.id.sunsetText);
         base = findViewById(R.id.frameLayoutBase);
+        timeText = findViewById(R.id.timeText);
+        base = findViewById(R.id.frameLayoutBase);
         allViews = new ArrayList<>();
         appLocationService = new AppLocationService(CurrentWeather.this, CurrentWeather.this);
 
+        // Adding all the views for faster processing in later stages
         allViews.add(cityNameText);
         allViews.add(dateText);
         allViews.add(descriptionText);
@@ -114,6 +132,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         allViews.add(sunriseText);
         allViews.add(sunsetText);
         allViews.add(phraseText);
+        allViews.add(timeText);
     }
 
     @Override
@@ -166,27 +185,29 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
      * Credits - snowy.jpg (Photo by Benjamin Raffetseder on Unsplash)
      * Credits - default.jpg (Photo by Nathan Dumlao on Unsplash)
      * Credits - rainy2.jpg (Photo by Matthew Henry on Unsplash)
+     * Credits - rainy3.jpg (Photo by Thomas Charters on Unsplash)
      *
      * @param type
      */
     private void setWalls(String type) {
-
-        type = "Snow";
-
         if(type.contains("Rain")){
-            base.setBackgroundResource(R.drawable.rainy);
+            base.setBackgroundResource(R.drawable.rainy3);
         } else if(type.contains("Snow")){
             base.setBackgroundResource(R.drawable.snowy);
         } else if(type.contains("Clouds")) {
-            base.setBackgroundResource(R.drawable.cloudy);
+            base.setBackgroundResource(R.drawable.cloudy2);
+        } else if(type.contains("Sun")) {
+            base.setBackgroundResource(R.drawable.sunny);
         } else {
             base.setBackgroundResource(R.drawable.default_weather);
         }
     }
 
+    /**
+     * Customizing UI - adding shadows to text views and setting a font
+     */
     private void setTextShadow() {
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
-        Typeface main = Typeface.createFromAsset(getAssets(),"fonts/Quicksand-Bold.ttf");
         currentTempText.setTypeface(face);
         currentTempText.setShadowLayer(5, 8, 8, Color.BLACK);
 
@@ -194,6 +215,20 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
             allViews.get(i).setShadowLayer(3, 5,5, Color.BLACK);
             allViews.get(i).setTypeface(face);
         }
+    }
+
+    /**
+     * Method for getting the current date and time
+     */
+    private void setCurrentDate() {
+
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM");
+        SimpleDateFormat tf = new SimpleDateFormat("HH:MM");
+
+        dateText.setText(df.format(c));
+        timeText.setText(tf.format(c));
     }
 }
 

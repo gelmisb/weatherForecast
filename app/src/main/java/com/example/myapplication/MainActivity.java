@@ -51,21 +51,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Views for details
         city = findViewById(R.id.cityText);
-        submit = findViewById(R.id.submit);
         listView =  findViewById(R.id.list);
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // If there is text within the field
-                if(city.getText() != null) {
-
-                    // Executing the thread
-                    cityText = city.getText().toString();
-                    new GetWeather(MainActivity.this, getApplicationContext(), cityText, listView, "16 days").execute();
-                }
-            }
-        });
+//        submit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                // If there is text within the field
+//                if(city.getText() != null) {
+//
+//                    // Executing the thread
+//                    cityText = city.getText().toString();
+//                    new GetWeather(MainActivity.this, getApplicationContext(), cityText, listView, "16 days").execute();
+//                }
+//            }
+//        });
     }
 }
