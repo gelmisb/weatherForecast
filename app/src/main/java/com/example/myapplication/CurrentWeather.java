@@ -14,6 +14,7 @@ import android.transition.Slide;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -115,8 +116,13 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         base = findViewById(R.id.frameLayoutBase);
         timeText = findViewById(R.id.timeText);
         base = findViewById(R.id.frameLayoutBase);
+
         allViews = new ArrayList<>();
+
         appLocationService = new AppLocationService(CurrentWeather.this, CurrentWeather.this);
+
+        autoCitiesText = findViewById(R.id.cityText);
+
 
         // Adding all the views for faster processing in later stages
         allViews.add(cityNameText);
@@ -229,6 +235,17 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
         dateText.setText(df.format(c));
         timeText.setText(tf.format(c));
+    }
+
+
+    private void setAutoText() {
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this,android.R.layout.select_dialog_item, cities);
+
+        autoCitiesText.setThreshold(2);
+        autoCitiesText.setAdapter(adapter);
+
     }
 }
 
