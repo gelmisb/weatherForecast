@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Location;
 
 import android.Manifest;
 import android.app.Activity;
@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 
@@ -35,7 +34,6 @@ public class AppLocationService extends Service implements LocationListener {
 
     public Location getLocation(String provider) {
         if (locationManager.isProviderEnabled(provider)) {
-
 
             // Here, thisActivity is the current activity
             if (ContextCompat.checkSelfPermission(activity,

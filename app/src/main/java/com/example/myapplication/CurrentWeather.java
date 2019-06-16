@@ -1,23 +1,12 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Parcel;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Window;
@@ -25,11 +14,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
+import com.example.myapplication.Location.AppLocationService;
+import com.example.myapplication.Model.Weather;
+
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
 
 public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted{
 
@@ -39,9 +27,8 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     // the application will then send the user to the 16 day
     // forecast
 
-
-    public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, desctiptionText;
-    AppLocationService appLocationService;
+    public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText;
+    private AppLocationService appLocationService;
 
 
     @Override
@@ -91,41 +78,35 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         timeText = findViewById(R.id.time);
         dateText = findViewById(R.id.dateText);
         phraseText = findViewById(R.id.phraseText);
-        desctiptionText = findViewById(R.id.desc);
+        descriptionText = findViewById(R.id.desc);
     }
-
-
-//
-//                    all.add(main);
-//                    all.add(description);
-//                    all.add(images);
-//                    all.add(current);
-//                    all.add(minTemp);
-//                    all.add(maxTemp);
-//                    all.add(speed);
-//                    all.add(deg);
-//                    all.add(cloudsMuch);
-//                    all.add(country);
-//                    all.add(sunrise);
-//                    all.add(sunset);
-//                    all.add(city);
-
-    public void getArrayList(ArrayList<String> arrayList) {
-        if(arrayList != null) {
-            phraseText.setText(arrayList.get(0));
-            desctiptionText.setText(arrayList.get(1));
-            currentTempText.setText(arrayList.get(3));
-            cityNameText.setText(arrayList.get(12));
-
-
-        } else {
-            Toast.makeText(this, "There was a problem with arrayList", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     @Override
-    public void onTaskCompleted(ArrayList<String> response) {
-        Toast.makeText(getApplicationContext(), response.get(0), Toast.LENGTH_LONG).show();
+    public void onTaskCompleted(Weather weather) {
+
+        Log.i("Weather", weather.getCity() + " ");
+
+//        private String phrase;
+//        private String description;
+//        private String currentTemp;
+//        private String minTemp;
+//        private String maxTemp;
+//        private String pressure;
+//        private String humidity;
+//        private String windSpeed;
+//        private String cloudiness;
+//        private String country;
+//        private String city;
+//        private String sunrise;
+//        private String sunset;
+//        private String icon;
+
+
+        phraseText.setText( weather.getPhrase());
+        descriptionText.setText(weather.getDescription());
+        currentTempText.setText(weather.getCurrentTemp());
+        cityNameText.setText(weather.getCity());
+        minTempText.setText(weather.getMinTemp());
+        maxTempText.setText(weather.getMaxTemp());
     }
 }

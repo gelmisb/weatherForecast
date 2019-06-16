@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
-import java.util.ArrayList;
+import com.example.myapplication.Model.Weather;
 
 public interface OnTaskCompleted {
-    void onTaskCompleted(ArrayList<String> response);
+    void onTaskCompleted(Weather weather);
 }

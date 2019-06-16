@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.myapplication.Model.Weather;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +26,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
     private ListView listView;
     private ProgressDialog pDialog;
     private OnTaskCompleted taskCompleted;
+    private Weather weather;
 
 
     // Overriding constructors - for 16  days forecast
@@ -69,8 +72,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
         pDialog.show();
-        Log.d("onPreExecute","onPreExecute worked" );
-//         @TODO Need to add a progress bar / spinner to show that the download is progressing
+        weather = new Weather();
     }
 
 
@@ -90,9 +92,6 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
             // Making a request to url and getting response
             url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=ae3723984918e29156906ffa2182bf02";
 
-            Log.i("getWeather", " " + lat);
-            Log.i("getWeather", " " + lon);
-            Log.i("getWeather", " " + url);
             // Putting the URL into the handler class to execute
             String jsonStr = sh.makeServiceCall(url);
             Log.i("getWeather", " " + jsonStr);
@@ -108,60 +107,46 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
 
                     // --- WEATHER PARAMS ---
                     // Creating a JSONObject to extract data
-                    JSONArray weather = jsonObj.getJSONArray("weather");
-                    JSONObject weather1 = weather.getJSONObject(0);
+                    JSONArray weather2 = jsonObj.getJSONArray("weather");
+                    JSONObject weather1 = weather2.getJSONObject(0);
                     // Retrieving strings from the JSONObject
-                    main = weather1.getString("main");
-                    description = weather1.getString("description");
-                    images = weather1.getString("icon");
+                    weather.setPhrase(weather1.getString("main"));
+                    weather.setDescription(weather1.getString("description"));
+                    weather.setIcon(weather1.getString("icon"));
 
 
                     // --- TEMPERATURE PARAMS ---
                     JSONObject temp = jsonObj.getJSONObject("main");
                     // Retrieving strings from the JSONObject
-                    current = temp.getString("temp");
-                    minTemp = temp.getString("pressure");
-                    maxTemp = temp.getString("humidity");
+                    weather.setCurrentTemp(temp.getString("temp"));
+                    weather.setPressure(temp.getString("pressure"));
+                    weather.setHumidity(temp.getString("humidity"));
+                    weather.setMinTemp(temp.getString("temp_min"));
+                    weather.setMaxTemp(temp.getString("temp_max"));
 
 
                     // --- WIND PARAMS ---
                     JSONObject wind = jsonObj.getJSONObject("wind");
                     // Retrieving strings from the JSONObject
-                    speed = wind.getString("speed");
-                    deg = wind.getString("deg");
+                    weather.setWindSpeed(wind.getString("speed"));
 
 
                     // --- CLOUD PARAMS ---
                     JSONObject clouds = jsonObj.getJSONObject("clouds");
                     // Retrieving strings from the JSONObject
-                    cloudsMuch = clouds.getString("all");
-
+                    weather.setCloudiness(clouds.getString("all"));
 
 
                     // --- SYS PARAMS ---
                     JSONObject sys = jsonObj.getJSONObject("sys");
                     // Retrieving strings from the JSONObject
-                    country = sys.getString("country");
-                    sunrise = sys.getString("sunrise");
-                    sunset = sys.getString("sunset");
-
+                    weather.setCountry(sys.getString("country"));
+                    weather.setSunrise(sys.getString("sunrise"));
+                    weather.setSunset(sys.getString("sunset"));
 
                     // --- CITY NAME PARAMS ---
-                    city = jsonObj.getString("name");
+                    weather.setCity(jsonObj.getString("name"));
 
-                    all.add(main);
-                    all.add(description);
-                    all.add(images);
-                    all.add(current);
-                    all.add(minTemp);
-                    all.add(maxTemp);
-                    all.add(speed);
-                    all.add(deg);
-                    all.add(cloudsMuch);
-                    all.add(country);
-                    all.add(sunrise);
-                    all.add(sunset);
-                    all.add(city);
 
 
                 } catch (final JSONException e) {
@@ -272,9 +257,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
 
         pDialog.dismiss();
         if(type.equals("current")) {
-            taskCompleted.onTaskCompleted(all);
-
-
+            taskCompleted.onTaskCompleted(weather);
         } else {
             // Custom list adapter for weather details
             // This takes in multiple arrayLists and then parses the details into the views accordingly
