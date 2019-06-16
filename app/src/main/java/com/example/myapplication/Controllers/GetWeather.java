@@ -66,7 +66,6 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        Toast.makeText(context,"Json Data is downloading",Toast.LENGTH_LONG).show();
         pDialog = new ProgressDialog(activity);
         pDialog.setMessage("Loading latest weather");
         pDialog.setIndeterminate(false);

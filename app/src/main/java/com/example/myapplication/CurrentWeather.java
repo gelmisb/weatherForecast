@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -34,23 +35,14 @@ import java.util.Date;
 
 public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted {
 
-    // @TODO In this Activity it should display the current weather of the current location
-    // When the user will try to see another city,
-    // they can type the city name and add it,
-    // the application will then send the user to the 16 day
-    // forecast
-
-    public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText, pressureText, humidityText, windText, cloudinessText, countryText, sunriseText, sunsetText;
     private AppLocationService appLocationService;
-    private FrameLayout base;
 
     private ArrayList<TextView> allViews;
+    private String weatherPhrase;
 
-    AutoCompleteTextView autoCitiesText;
-
-    String[] cities = { "Paries,France", "PA,United States","Parana,Brazil",
-            "Padua,Italy", "Pasadena,CA,United States"};
-
+    public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText, pressureText, humidityText, windText, cloudinessText, countryText, sunriseText, sunsetText;
+    private FrameLayout base;
+    private AutoCompleteTextView autoCitiesText;
 
 
     @Override
@@ -147,7 +139,9 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     public void onTaskCompleted(Weather weather) {
 
         // Setting the background depending on weather conditions
-        setWalls(weather.getPhrase());
+        weatherPhrase = weather.getPhrase();
+
+        setWalls(weatherPhrase);
 
         // Reformatting from mills to normal time
         double temp1 = Double.parseDouble(weather.getSunrise());
@@ -197,7 +191,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
      *
      * @param type
      */
-    private void setWalls(String type) {
+    public void setWalls(String type) {
         if(type.contains("Rain")){
             base.setBackgroundResource(R.drawable.rainy3);
         } else if(type.contains("Snow")){
@@ -217,7 +211,9 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     private void setTextShadow() {
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
         currentTempText.setTypeface(face);
+        autoCitiesText.setTypeface(face);
         currentTempText.setShadowLayer(5, 8, 8, Color.BLACK);
+        autoCitiesText.setShadowLayer(5, 8, 8, Color.BLACK);
 
         for(int i = 0; i < allViews.size(); i++) {
             allViews.get(i).setShadowLayer(3, 5,5, Color.BLACK);
@@ -246,9 +242,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         LoadData loadData = new LoadData();
 
         // ArrayAdapter necessary to add the cities into the autoText
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, loadData.loadArrayData(this));
-
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item, loadData.loadArrayData(this));
 
         autoCitiesText.setThreshold(0);
         autoCitiesText.setAdapter(adapter);
@@ -262,9 +256,15 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
                 String city = adapterView.getItemAtPosition(i).toString();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        CurrentWeather.this.startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("city", city), ActivityOptions.makeSceneTransitionAnimation(CurrentWeather.this).toBundle());
+                        CurrentWeather.this.startActivity(new Intent(getApplicationContext(), MainActivity.class)
+                                .putExtra("city", city)
+                                .putExtra("phrase", weatherPhrase)
+                                , ActivityOptions.makeSceneTransitionAnimation(CurrentWeather.this)
+                                        .toBundle());
                 } else {
-                    CurrentWeather.this.startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("city", city));
+                    CurrentWeather.this.startActivity(new Intent(getApplicationContext(), MainActivity.class)
+                            .putExtra("city", city)
+                            .putExtra("phrase", weatherPhrase));
                 }
             }
         });

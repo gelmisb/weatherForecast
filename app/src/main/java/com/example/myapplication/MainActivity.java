@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
@@ -9,19 +11,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myapplication.Controllers.GetWeather;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText city;
-    private Button submit;
     private ListView listView;
-
-    private String cityText;
+    private FrameLayout frameLayout;
+    private TextView cityText, headingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +53,40 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Views for details
-        city = findViewById(R.id.cityText);
         listView =  findViewById(R.id.list);
+        frameLayout =  findViewById(R.id.frameLayoutBase);
+        headingText =  findViewById(R.id.heading);
+        cityText =  findViewById(R.id.cityName);
 
-//        submit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                // If there is text within the field
-//                if(city.getText() != null) {
-//
-//                    // Executing the thread
-//                    cityText = city.getText().toString();
-//                    new GetWeather(MainActivity.this, getApplicationContext(), cityText, listView, "16 days").execute();
-//                }
-//            }
-//        });
+        Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
+        cityText.setTypeface(face);
+        headingText.setTypeface(face);
+        headingText.setShadowLayer(2, 5, 5, Color.BLACK);
+        cityText.setShadowLayer(6, 10, 10, Color.BLACK);
+
+
+
+        String city = getIntent().getStringExtra("city");
+        String phrase = getIntent().getStringExtra("phrase");
+
+        cityText.setText(city);
+        setWalls(phrase);
+
+        new GetWeather(MainActivity.this, getApplicationContext(), city, listView, "16 days").execute();
+
+    }
+
+    public void setWalls(String type) {
+        if(type.contains("Rain")){
+            frameLayout.setBackgroundResource(R.drawable.rainy3);
+        } else if(type.contains("Snow")){
+            frameLayout.setBackgroundResource(R.drawable.snowy);
+        } else if(type.contains("Clouds")) {
+            frameLayout.setBackgroundResource(R.drawable.cloudy2);
+        } else if(type.contains("Sun")) {
+            frameLayout.setBackgroundResource(R.drawable.sunny);
+        } else {
+            frameLayout.setBackgroundResource(R.drawable.default_weather);
+        }
     }
 }

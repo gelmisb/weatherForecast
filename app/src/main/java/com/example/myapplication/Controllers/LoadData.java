@@ -41,9 +41,10 @@ public class LoadData {
 
                 // Take a string in that object called cities
                 cities = info.getString("city");
+                String country = info.getString("country");
 
                 // Add that string to the arrayList
-                cityList.add(cities);
+                cityList.add(cities + ", " + country);
             }
 
         } catch (JSONException e) {
