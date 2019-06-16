@@ -55,8 +55,6 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
         initialiseVars();
 
-        appLocationService = new AppLocationService(
-                CurrentWeather.this, CurrentWeather.this);
 
         Location location = appLocationService
                 .getLocation(LocationManager.GPS_PROVIDER);
@@ -77,8 +75,14 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         cityNameText = findViewById(R.id.city);
         timeText = findViewById(R.id.time);
         dateText = findViewById(R.id.dateText);
-        phraseText = findViewById(R.id.phraseText);
+        phraseText = findViewById(R.id.phrase);
         descriptionText = findViewById(R.id.desc);
+        minTempText = findViewById(R.id.minTempText);
+        maxTempText = findViewById(R.id.maxTemptext);
+
+        appLocationService = new AppLocationService(
+                CurrentWeather.this, CurrentWeather.this);
+
     }
 
     @Override
@@ -102,7 +106,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 //        private String icon;
 
 
-        phraseText.setText( weather.getPhrase());
+        phraseText.setText(weather.getPhrase());
         descriptionText.setText(weather.getDescription());
         currentTempText.setText(weather.getCurrentTemp());
         cityNameText.setText(weather.getCity());
