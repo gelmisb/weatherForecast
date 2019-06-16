@@ -10,7 +10,29 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        testApplicationId "com.test.myapplication"
+        // Specifies the fully-qualified class name of the test instrumentation runner.
+        // If set to false (default), profiling occurs the entire time the instrumentation
+        // class is running.
+        testHandleProfiling true
+        // If set to 'true', indicates that the Android system should run the instrumentation
+        // class as a functional test. The default value is 'false'
+        testFunctionalTest true
+
     }
+
+    testOptions {
+        // Changes the directory where Gradle saves test reports. By default, Gradle saves test reports
+        // in the path_to_your_project/module_name/build/outputs/reports/ directory.
+        // '$rootDir' sets the path relative to the root directory of the current project.
+        reportDir "$rootDir/test-reports"
+        // Changes the directory where Gradle saves test results. By default, Gradle saves test results
+        // in the path_to_your_project/module_name/build/outputs/test-results/ directory.
+        // '$rootDir' sets the path relative to the root directory of the current project.
+        resultsDir "$rootDir/test-results"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -34,5 +56,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0' // Required for instrumented tests
+    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+
 }
+
