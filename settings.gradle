@@ -1,1 +1,1 @@
-include ':weatherForecast'
+include ':app'
