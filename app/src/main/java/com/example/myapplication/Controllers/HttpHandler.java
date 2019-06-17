@@ -1,6 +1,7 @@
 package com.example.myapplication.Controllers;
 
 import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -66,8 +67,6 @@ class HttpHandler {private static final String TAG = HttpHandler.class.getSimple
             Log.e(TAG, "Exception: " + e.getMessage());
 
         }
-
-
         return response;
     }
 

@@ -25,9 +25,6 @@ public class AppLocationService extends Service implements LocationListener {
     private static final long MIN_DISTANCE_FOR_UPDATE = 10;
     private static final long MIN_TIME_FOR_UPDATE = 1000 * 60 * 2;
 
-
-    public AppLocationService() {}
-
     public AppLocationService(Context context, Activity activity) {
         this.activity = activity;
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
@@ -41,11 +38,7 @@ public class AppLocationService extends Service implements LocationListener {
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                        Manifest.permission.READ_CONTACTS)) {
 
-                } else {
-                    // No explanation needed; request the permission
                     ActivityCompat.requestPermissions(activity,
                             new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION },
                             1);
@@ -56,7 +49,6 @@ public class AppLocationService extends Service implements LocationListener {
                         location = locationManager.getLastKnownLocation(provider);
                         return location;
                     }
-                }
             } else {
                 locationManager.requestLocationUpdates(provider,
                         MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
@@ -70,24 +62,17 @@ public class AppLocationService extends Service implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-    }
+    public void onLocationChanged(Location location) { }
 
     @Override
-    public void onProviderDisabled(String provider) {
-    }
+    public void onProviderDisabled(String provider) {}
 
     @Override
-    public void onProviderEnabled(String provider) {
-    }
+    public void onProviderEnabled(String provider) {}
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
 
     @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
-    }
-
+    public IBinder onBind(Intent arg0) { return null; }
 }

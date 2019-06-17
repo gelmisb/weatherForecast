@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,9 @@ import com.example.myapplication.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
-
-import javax.crypto.spec.DESedeKeySpec;
-
-import static android.content.ContentValues.TAG;
 
 
 @SuppressWarnings("NullableProblems")
@@ -42,7 +33,7 @@ public class LoadList extends ArrayAdapter<String> {
      * variables to be executed
      *
      */
-    public LoadList(Activity context, ArrayList<String>  degrees, ArrayList<String>  minTemp, ArrayList<String>  maxTemp, ArrayList<String>  mPhrase, ArrayList<String>  desc, ArrayList<String>  imageArray, int layout) {
+    LoadList(Activity context, ArrayList<String> degrees, ArrayList<String> minTemp, ArrayList<String> maxTemp, ArrayList<String> mPhrase, ArrayList<String> desc, ArrayList<String> imageArray, int layout) {
         super(context, layout, degrees);
         this.context=context;
         this.degrees=degrees;
@@ -53,7 +44,6 @@ public class LoadList extends ArrayAdapter<String> {
         this.imageArray=imageArray;
         this.layout=layout;
     }
-
 
     // getView will allow to push
     // the information into the views

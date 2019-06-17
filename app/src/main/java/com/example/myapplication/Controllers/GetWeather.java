@@ -9,8 +9,8 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.myapplication.Model.Weather;
 import com.example.myapplication.Interfaces.OnTaskCompleted;
+import com.example.myapplication.Model.Weather;
 import com.example.myapplication.R;
 
 import org.json.JSONArray;
@@ -33,6 +33,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
     private OnTaskCompleted taskCompleted;
     private Weather weather;
 
+
     // Overriding constructors - for 16  days forecast
     public GetWeather(Activity activity, Context context, String city, ListView listView, String type) {
         this.context = context;
@@ -42,6 +43,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
         this.type = type;
     }
 
+
     // Overriding constructors - for current forecast
     public GetWeather(Activity activity, Context context, double lat, double lon, String type, OnTaskCompleted activityContext) {
         this.context = context;
@@ -50,12 +52,8 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
         this.lon = lon;
         this.type = type;
         this.taskCompleted = activityContext;
-
     }
-    /**
-     *  Method that uses AsyncTask to assign a thread to download the data
-     *  and parse it using JSONObject and JSONArray
-     */
+
 
     // Too many arrayLists - other option was HashSet<String, String, String, String, String> hashSet
     private ArrayList<String> currentArrayList = new ArrayList<>();
@@ -76,7 +74,10 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
         pDialog.show();
     }
 
-
+    /**
+     *  Method that uses AsyncTask to assign a thread to download the data
+     *  and parse it using JSONObject and JSONArray
+     */
     @Override
     protected Void doInBackground(Void... arg0) {
 

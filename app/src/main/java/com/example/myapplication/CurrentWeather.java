@@ -17,8 +17,10 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,6 +46,8 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText, pressureText, humidityText, windText, cloudinessText, countryText, sunriseText, sunsetText;
     private LinearLayout base;
     private AutoCompleteTextView autoCitiesText;
+    private ImageButton imageButton;
+
 
 
     @Override
@@ -84,11 +88,13 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
                 .getLocation(LocationManager.GPS_PROVIDER);
 
         // If location is not null get the current weather
-        if (location != null) {
+        if (!ValidationUtility.isLocationValid(location) ) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
             new GetWeather(CurrentWeather.this, getApplicationContext(), latitude, longitude, "current", CurrentWeather.this).execute();
+        } else {
+            Toast.makeText(this, "There was a problem with location", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -114,13 +120,13 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         sunsetText = findViewById(R.id.sunsetText);
         base = findViewById(R.id.base);
         timeText = findViewById(R.id.timeText);
+        imageButton = findViewById(R.id.imageButton);
 
         allViews = new ArrayList<>();
 
         appLocationService = new AppLocationService(CurrentWeather.this, CurrentWeather.this);
 
         autoCitiesText = findViewById(R.id.cityText);
-
 
         // Adding all the views for faster processing in later stages
         allViews.add(cityNameText);
@@ -146,7 +152,11 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         // Setting the background depending on weather conditions
         weatherPhrase = weather.getPhrase();
 
-        setWalls(weatherPhrase);
+        if(ValidationUtility.isTypeRight(weatherPhrase)){
+            setWalls(weatherPhrase);
+        } else {
+            base.setBackgroundResource(R.drawable.default_weather);
+        }
 
         // Reformatting from mills to normal time
         double temp1 = Double.parseDouble(weather.getSunrise());
@@ -165,7 +175,14 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         // Setting the values for the user
         phraseText.setText(weather.getPhrase());
         descriptionText.setText(weather.getDescription());
-        currentTempText.setText(value + getString(R.string.C));
+
+        if(ValidationUtility.isTempCorrect(value)){
+            currentTempText.setText(value + getString(R.string.C));
+        } else {
+            currentTempText.setText("It's over 9000");
+            Toast.makeText(this, "There was a problem with the temperature params", Toast.LENGTH_SHORT).show();
+        }
+
         minTempText.setText("Lowest temp.: " + weather.getMinTemp() + "°C");
         maxTempText.setText("Highest temp.: " + weather.getMaxTemp() + "°C");
         pressureText.setText("Pressure: " + weather.getPressure() + " hPa");
@@ -202,17 +219,18 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
             base.setBackgroundResource(R.drawable.snowy);
         } else if(type.contains("Clouds")) {
             base.setBackgroundResource(R.drawable.cloudy2);
-        } else if(type.contains("Sun")) {
-            base.setBackgroundResource(R.drawable.sunny);
         } else {
-            base.setBackgroundResource(R.drawable.default_weather);
+            base.setBackgroundResource(R.drawable.sunny);
         }
     }
+
 
     /**
      * Customizing UI - adding shadows to text views and setting a font
      */
     private void setTextShadow() {
+        imageButton.setImageResource(R.drawable.search);
+
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
         currentTempText.setTypeface(face);
         autoCitiesText.setTypeface(face);
@@ -225,19 +243,28 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         }
     }
 
+
+
     /**
      * Method for getting the current date and time
      */
     private void setCurrentDate() {
 
         Date c = Calendar.getInstance().getTime();
+        Date currentDate = new Date(System.currentTimeMillis());
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MMM");
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat tf = new SimpleDateFormat("HH:MM");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
 
         dateText.setText(df.format(c));
-        timeText.setText(tf.format(c));
+        if(ValidationUtility.isCorrectTime(tf.format(currentDate))){
+            timeText.setText(tf.format(currentDate));
+        } else {
+            Toast.makeText(this, "Couldn't get time", Toast.LENGTH_SHORT).show();
+            timeText.setText(R.string.unknown);
+        }
     }
+
 
 
     /**
@@ -278,12 +305,21 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         autoCitiesText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
+                imageButton.setImageResource(R.drawable.search1);
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        autoCitiesText.getText().clear();
+                    }
+                });
 
             }
         });
     }
 }
 
+
+// ---------------------------- CREDITS FOR ICONS -------------------------
 //    <div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 //
 //    <div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>

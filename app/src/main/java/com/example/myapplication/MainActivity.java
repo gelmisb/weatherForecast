@@ -18,9 +18,7 @@ import com.example.myapplication.Controllers.GetWeather;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView listView;
     private FrameLayout frameLayout;
-    private TextView cityText, headingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +47,16 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Views for details
-        listView =  findViewById(R.id.list);
+        ListView listView = findViewById(R.id.list);
         frameLayout =  findViewById(R.id.frameLayoutBase);
-        headingText =  findViewById(R.id.heading);
-        cityText =  findViewById(R.id.cityName);
+        TextView headingText = findViewById(R.id.heading);
+        TextView cityText = findViewById(R.id.cityName);
 
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
         cityText.setTypeface(face);
         headingText.setTypeface(face);
         headingText.setShadowLayer(2, 5, 5, Color.BLACK);
         cityText.setShadowLayer(6, 10, 10, Color.BLACK);
-
 
 
         String city = getIntent().getStringExtra("city");
