@@ -74,15 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void setWalls(String type) {
         if(type.contains("Rain")){
-            frameLayout.setBackgroundResource(R.mipmap.rainy3);
+            frameLayout.setBackgroundResource(R.drawable.rainy3);
         } else if(type.contains("Snow")){
-            frameLayout.setBackgroundResource(R.mipmap.snowy);
+            frameLayout.setBackgroundResource(R.drawable.snowy);
         } else if(type.contains("Clouds")) {
-            frameLayout.setBackgroundResource(R.mipmap.cloudy2);
+            frameLayout.setBackgroundResource(R.drawable.cloudy2);
         } else if(type.contains("Sun")) {
-            frameLayout.setBackgroundResource(R.mipmap.sunny);
+            frameLayout.setBackgroundResource(R.drawable.sunny);
         } else {
-            frameLayout.setBackgroundResource(R.mipmap.default_weather);
+            frameLayout.setBackgroundResource(R.drawable.default_weather);
         }
     }
 }

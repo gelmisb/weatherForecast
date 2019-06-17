@@ -197,15 +197,15 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
      */
     public void setWalls(String type) {
         if(type.contains("Rain")){
-            base.setBackgroundResource(R.mipmap.rainy3);
+            base.setBackgroundResource(R.drawable.rainy3);
         } else if(type.contains("Snow")){
-            base.setBackgroundResource(R.mipmap.snowy);
+            base.setBackgroundResource(R.drawable.snowy);
         } else if(type.contains("Clouds")) {
-            base.setBackgroundResource(R.mipmap.cloudy2);
+            base.setBackgroundResource(R.drawable.cloudy2);
         } else if(type.contains("Sun")) {
-            base.setBackgroundResource(R.mipmap.sunny);
+            base.setBackgroundResource(R.drawable.sunny);
         } else {
-            base.setBackgroundResource(R.mipmap.default_weather);
+            base.setBackgroundResource(R.drawable.default_weather);
         }
     }
 
