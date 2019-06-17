@@ -10,6 +10,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.transition.Slide;
 import android.view.View;
 import android.view.Window;
@@ -229,7 +231,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
      * Customizing UI - adding shadows to text views and setting a font
      */
     private void setTextShadow() {
-        imageButton.setImageResource(R.drawable.search);
+        imageButton.setBackgroundResource(R.drawable.search);
 
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
         currentTempText.setTypeface(face);
@@ -302,17 +304,31 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
             }
         });
 
-        autoCitiesText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                imageButton.setImageResource(R.drawable.search1);
-                imageButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        autoCitiesText.getText().clear();
-                    }
-                });
 
+        autoCitiesText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                imageButton.setBackgroundResource(R.drawable.search);
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                imageButton.setBackgroundResource(R.drawable.search1);
+
+            }
+        });
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if( autoCitiesText.getText() != null) {
+                    autoCitiesText.getText().clear();
+                    imageButton.setBackgroundResource(R.drawable.search);
+                }
             }
         });
     }

@@ -1,17 +1,22 @@
 package com.example.myapplication;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Controllers.GetWeather;
@@ -19,6 +24,7 @@ import com.example.myapplication.Controllers.GetWeather;
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout frameLayout;
+    private ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // Views for details
         ListView listView = findViewById(R.id.list);
         frameLayout =  findViewById(R.id.frameLayoutBase);
+        backBtn =  findViewById(R.id.backBtn);
         TextView headingText = findViewById(R.id.heading);
         TextView cityText = findViewById(R.id.cityName);
 
@@ -67,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
         new GetWeather(MainActivity.this, getApplicationContext(), city, listView, "16 days").execute();
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
     }
 
     public void setWalls(String type) {
@@ -81,5 +96,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             frameLayout.setBackgroundResource(R.drawable.default_weather);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MainActivity.this, CurrentWeather.class), ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+        finish();
     }
 }

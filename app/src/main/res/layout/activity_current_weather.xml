@@ -33,9 +33,10 @@
             android:layout_width="40dp"
             android:layout_height="@dimen/basic50"
             android:layout_weight="1"
-            android:background="@mipmap/search"
+            android:background="@drawable/search"
             android:contentDescription="@string/search_button"
-            android:maxWidth="@dimen/basic50" />
+            android:maxWidth="40dp"
+            android:maxHeight="40dp" />
     </LinearLayout>
 
     <LinearLayout
