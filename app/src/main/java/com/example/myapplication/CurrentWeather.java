@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.Controllers.GetWeather;
@@ -40,7 +42,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     private String weatherPhrase;
 
     public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText, pressureText, humidityText, windText, cloudinessText, countryText, sunriseText, sunsetText;
-//    private FrameLayout base;
+    private LinearLayout base;
     private AutoCompleteTextView autoCitiesText;
 
 
@@ -111,8 +113,8 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         countryText = findViewById(R.id.country);
         sunriseText = findViewById(R.id.sunriseText);
         sunsetText = findViewById(R.id.sunsetText);
+        base = findViewById(R.id.base);
         timeText = findViewById(R.id.timeText);
-//        base = findViewById(R.id.frameLayoutBase);
 
         allViews = new ArrayList<>();
 
@@ -195,17 +197,17 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
      * @param type
      */
     public void setWalls(String type) {
-//        if(type.contains("Rain")){
-//            base.setBackgroundResource(R.drawable.rainy3);
-//        } else if(type.contains("Snow")){
-//            base.setBackgroundResource(R.drawable.snowy);
-//        } else if(type.contains("Clouds")) {
-//            base.setBackgroundResource(R.drawable.cloudy2);
-//        } else if(type.contains("Sun")) {
-//            base.setBackgroundResource(R.drawable.sunny);
-//        } else {
-//            base.setBackgroundResource(R.drawable.default_weather);
-//        }
+        if(type.contains("Rain")){
+            base.setBackgroundResource(R.drawable.rainy3);
+        } else if(type.contains("Snow")){
+            base.setBackgroundResource(R.drawable.snowy);
+        } else if(type.contains("Clouds")) {
+            base.setBackgroundResource(R.drawable.cloudy2);
+        } else if(type.contains("Sun")) {
+            base.setBackgroundResource(R.drawable.sunny);
+        } else {
+            base.setBackgroundResource(R.drawable.default_weather);
+        }
     }
 
     /**
