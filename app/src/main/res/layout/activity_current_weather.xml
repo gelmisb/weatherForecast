@@ -1,124 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/rainy3"
+    android:orientation="vertical"
+    android:weightSum="8"
     tools:context=".CurrentWeather">
 
-    <FrameLayout
-        android:id="@+id/frameLayoutBase"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.5"
-        android:animateLayoutChanges="false"
-        android:background="@drawable/rainy3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-    </FrameLayout>
-
-    <AutoCompleteTextView
-        android:id="@+id/cityText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/basic100"
-        android:hint="@string/enter_city"
-        android:paddingLeft="@dimen/basic100"
-        android:paddingRight="@dimen/basic100"
-        android:textColor="#FFFFFF"
-        android:textColorHint="@android:color/background_light"
-        android:textSize="@dimen/mediumLargeFont"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayoutBase" />
-
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/basic10"
-        android:layout_marginBottom="@dimen/basic10"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cityText">
+        android:layout_weight="2"
+        android:layout_marginTop="40dp"
+        android:padding="@dimen/basic30"
+        android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/city"
+        <AutoCompleteTextView
+            android:id="@+id/cityText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/textview"
+            android:layout_weight="10"
+            android:hint="@string/enter_city"
             android:textColor="@color/colorWhite"
-            android:textSize="24sp" />
+            android:textColorHint="@android:color/background_light"
+            android:textSize="@dimen/mediumLargeFont"
+            tools:ignore="NestedWeights" />
 
-        <TextView
-            android:id="@+id/country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/textview"
-            android:textColor="@color/colorWhite"
-            android:textSize="24sp" />
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="40dp"
+            android:layout_height="@dimen/basic50"
+            android:maxWidth="@dimen/basic50"
+            android:layout_weight="1"
+            android:background="@drawable/search"
+            android:contentDescription="@string/search_button" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/basic100"
+        android:layout_weight="2"
         android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cityText">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/currentTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingRight="@dimen/basic10"
+                android:ellipsize="none"
+                android:singleLine="true"
+                android:textAlignment="center"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/hugeFont"
+                android:minWidth= "50dp"
+                android:maxWidth= "200dp"
+                android:textSize="100sp"
                 android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/phrase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/textview"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/mediumFont" />
-
-            <TextView
-                android:id="@+id/desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/textview"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/mediumFont" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -126,12 +73,15 @@
                 android:layout_marginStart="@dimen/basic10"
                 android:layout_marginEnd="@dimen/basic10"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/timeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:paddingEnd="@dimen/basic10"
                     android:layout_weight="1"
                     android:text="@string/textview"
                     android:textColor="@color/colorWhite"
@@ -141,34 +91,92 @@
                     android:id="@+id/dateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:layout_weight="1"
+                    android:paddingStart="@dimen/basic10"
                     android:text="@string/textview"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/mediumFont" />
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:weightSum="1"
+            android:layout_marginStart="@dimen/basic30"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/phrase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/textview"
+                android:layout_weight="0.5"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/textview"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
+
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/basic30"
-        android:layout_marginLeft="@dimen/basic30"
         android:layout_marginTop="@dimen/basic10"
-        android:layout_marginEnd="@dimen/basic30"
-        android:layout_marginRight="@dimen/basic30"
         android:layout_marginBottom="@dimen/basic10"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textview"
+            android:textColor="@color/colorWhite"
+            android:paddingEnd="@dimen/basic30"
+            android:textStyle="bold"
+            android:textSize="@dimen/largeFont" />
+
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textview"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/largeFont" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:padding="@dimen/basic30"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutBase"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        android:weightSum="8">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/basic10">
@@ -178,8 +186,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/basic30"
-                android:layout_marginRight="@dimen/basic30"
                 android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/mediumFont" />
@@ -189,6 +198,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/mediumFont" />
@@ -198,7 +209,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/basic10">
@@ -207,8 +218,10 @@
                 android:id="@+id/pressureText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/basic10"
+                android:textAlignment="textStart"
+                android:layout_marginEnd="@dimen/basic30"
                 android:layout_weight="1"
+                android:singleLine="true"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/mediumFont" />
@@ -217,7 +230,9 @@
                 android:id="@+id/windText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAlignment="textStart"
                 android:layout_weight="1"
+                android:singleLine="true"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/mediumFont" />
@@ -226,36 +241,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/basic10">
 
             <TextView
-                android:id="@+id/cloudinessText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/basic30"
-                android:layout_weight="1"
-                android:text="@string/textview"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/mediumFont"
-                android:layout_marginEnd="@dimen/basic30" />
-
-            <TextView
                 android:id="@+id/humidityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/basic30"
                 android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/mediumFont" />
+
+            <TextView
+                android:id="@+id/cloudinessText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:text="@string/textview"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont"  />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:padding="@dimen/basic10">
 
@@ -263,8 +282,10 @@
                 android:id="@+id/minTempText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/basic30"
+                android:layout_marginEnd="@dimen/basic30"
                 android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/mediumFont" />
@@ -274,6 +295,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
                 android:text="@string/textview"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/mediumFont" />
@@ -281,4 +304,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

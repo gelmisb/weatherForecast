@@ -40,7 +40,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     private String weatherPhrase;
 
     public TextView cityNameText, timeText, dateText, phraseText, currentTempText, minTempText, maxTempText, descriptionText, pressureText, humidityText, windText, cloudinessText, countryText, sunriseText, sunsetText;
-    private FrameLayout base;
+//    private FrameLayout base;
     private AutoCompleteTextView autoCitiesText;
 
 
@@ -75,12 +75,13 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         // Setting the current date
         setCurrentDate();
 
+        // Setting the values for the autoText
         setAutoText();
-
 
         Location location = appLocationService
                 .getLocation(LocationManager.GPS_PROVIDER);
 
+        // If location is not null get the current weather
         if (location != null) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
@@ -90,6 +91,10 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     }
 
 
+    /**
+     * Initialising global variables
+     * @params null
+     */
     private void initialiseVars() {
         currentTempText = findViewById(R.id.currentTemp);
         cityNameText = findViewById(R.id.city);
@@ -106,9 +111,8 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         countryText = findViewById(R.id.country);
         sunriseText = findViewById(R.id.sunriseText);
         sunsetText = findViewById(R.id.sunsetText);
-        base = findViewById(R.id.frameLayoutBase);
         timeText = findViewById(R.id.timeText);
-        base = findViewById(R.id.frameLayoutBase);
+//        base = findViewById(R.id.frameLayoutBase);
 
         allViews = new ArrayList<>();
 
@@ -191,21 +195,22 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
      * @param type
      */
     public void setWalls(String type) {
-        if(type.contains("Rain")){
-            base.setBackgroundResource(R.drawable.rainy3);
-        } else if(type.contains("Snow")){
-            base.setBackgroundResource(R.drawable.snowy);
-        } else if(type.contains("Clouds")) {
-            base.setBackgroundResource(R.drawable.cloudy2);
-        } else if(type.contains("Sun")) {
-            base.setBackgroundResource(R.drawable.sunny);
-        } else {
-            base.setBackgroundResource(R.drawable.default_weather);
-        }
+//        if(type.contains("Rain")){
+//            base.setBackgroundResource(R.drawable.rainy3);
+//        } else if(type.contains("Snow")){
+//            base.setBackgroundResource(R.drawable.snowy);
+//        } else if(type.contains("Clouds")) {
+//            base.setBackgroundResource(R.drawable.cloudy2);
+//        } else if(type.contains("Sun")) {
+//            base.setBackgroundResource(R.drawable.sunny);
+//        } else {
+//            base.setBackgroundResource(R.drawable.default_weather);
+//        }
     }
 
     /**
      * Customizing UI - adding shadows to text views and setting a font
+     * @params null
      */
     private void setTextShadow() {
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
@@ -222,6 +227,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
     /**
      * Method for getting the current date and time
+     * @params null
      */
     private void setCurrentDate() {
 
@@ -235,7 +241,10 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
     }
 
 
-    // Add the cities to the autoText
+    /**
+     * Add the cities to the autoText
+     * @params null
+     */
     private void setAutoText() {
 
         LoadData loadData = new LoadData();
@@ -267,5 +276,16 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
                 }
             }
         });
+
+        autoCitiesText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+            }
+        });
     }
 }
+
+//    <div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+//
+//    <div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
