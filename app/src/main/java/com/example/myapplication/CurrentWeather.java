@@ -1,8 +1,6 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -19,14 +17,15 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.Controllers.GetWeather;
 import com.example.myapplication.Controllers.LoadData;
-import com.example.myapplication.Location.AppLocationService;
 import com.example.myapplication.Interfaces.OnTaskCompleted;
+import com.example.myapplication.Location.AppLocationService;
 import com.example.myapplication.Model.Weather;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+@SuppressWarnings("deprecation")
 public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted {
 
     private AppLocationService appLocationService;
@@ -95,7 +95,6 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
     /**
      * Initialising global variables
-     * @params null
      */
     private void initialiseVars() {
         currentTempText = findViewById(R.id.currentTemp);
@@ -140,6 +139,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         allViews.add(timeText);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onTaskCompleted(Weather weather) {
 
@@ -165,7 +165,7 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
         // Setting the values for the user
         phraseText.setText(weather.getPhrase());
         descriptionText.setText(weather.getDescription());
-        currentTempText.setText(value + "°C");
+        currentTempText.setText(value + getString(R.string.C));
         minTempText.setText("Lowest temp.: " + weather.getMinTemp() + "°C");
         maxTempText.setText("Highest temp.: " + weather.getMaxTemp() + "°C");
         pressureText.setText("Pressure: " + weather.getPressure() + " hPa");
@@ -194,25 +194,23 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
      * Credits - rainy2.jpg (Photo by Matthew Henry on Unsplash)
      * Credits - rainy3.jpg (Photo by Thomas Charters on Unsplash)
      *
-     * @param type
      */
     public void setWalls(String type) {
         if(type.contains("Rain")){
-            base.setBackgroundResource(R.drawable.rainy3);
+            base.setBackgroundResource(R.mipmap.rainy3);
         } else if(type.contains("Snow")){
-            base.setBackgroundResource(R.drawable.snowy);
+            base.setBackgroundResource(R.mipmap.snowy);
         } else if(type.contains("Clouds")) {
-            base.setBackgroundResource(R.drawable.cloudy2);
+            base.setBackgroundResource(R.mipmap.cloudy2);
         } else if(type.contains("Sun")) {
-            base.setBackgroundResource(R.drawable.sunny);
+            base.setBackgroundResource(R.mipmap.sunny);
         } else {
-            base.setBackgroundResource(R.drawable.default_weather);
+            base.setBackgroundResource(R.mipmap.default_weather);
         }
     }
 
     /**
      * Customizing UI - adding shadows to text views and setting a font
-     * @params null
      */
     private void setTextShadow() {
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
@@ -229,14 +227,13 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
     /**
      * Method for getting the current date and time
-     * @params null
      */
     private void setCurrentDate() {
 
         Date c = Calendar.getInstance().getTime();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM");
-        SimpleDateFormat tf = new SimpleDateFormat("HH:MM");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MMM");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat tf = new SimpleDateFormat("HH:MM");
 
         dateText.setText(df.format(c));
         timeText.setText(tf.format(c));
@@ -245,14 +242,13 @@ public class CurrentWeather extends AppCompatActivity implements OnTaskCompleted
 
     /**
      * Add the cities to the autoText
-     * @params null
      */
     private void setAutoText() {
 
         LoadData loadData = new LoadData();
 
         // ArrayAdapter necessary to add the cities into the autoText
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item, loadData.loadArrayData(this));
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.select_dialog_item, loadData.loadArrayData(this));
 
         autoCitiesText.setThreshold(0);
         autoCitiesText.setAdapter(adapter);

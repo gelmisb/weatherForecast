@@ -8,12 +8,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class LoadData {
 
-    private String[] output;
-    private String cities;
     private ArrayList<String> cityList;
 
     /**
@@ -21,8 +20,6 @@ public class LoadData {
      * that has been parsed and analysed in order
      * to extract and manipulate the data
      *
-     * @param context
-     * @return
      */
     public String[] loadArrayData(Context context) {
         try {
@@ -40,7 +37,7 @@ public class LoadData {
                 JSONObject info = obj.getJSONObject(i);
 
                 // Take a string in that object called cities
-                cities = info.getString("city");
+                String cities = info.getString("city");
                 String country = info.getString("country");
 
                 // Add that string to the arrayList
@@ -51,11 +48,8 @@ public class LoadData {
             e.printStackTrace();
         }
 
-        // Parse the arrayList into an array in order to fit that into the AutoTextView
-        output = cityList.toArray(new String[cityList.size()]);
-
         // return an array
-        return output;
+        return cityList.toArray(new String[cityList.size()]);
     }
 
     /**
@@ -64,8 +58,6 @@ public class LoadData {
      * That then returns a whole JSON within a string
      * for further processing
      *
-     * @param context
-     * @return
      */
     private String loadJSONFromAsset(Context context) {
 
@@ -84,14 +76,14 @@ public class LoadData {
             // Initialise a byte buffer with that size
             byte[] buffer = new byte[size];
 
-            // Gewt the information into the buffer using the stream
+            // Get the information into the buffer using the stream
             is.read(buffer);
 
             // Close the stream
             is.close();
 
             // put the data as a JSON in a string
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;

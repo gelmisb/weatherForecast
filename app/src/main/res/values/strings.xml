@@ -6,4 +6,6 @@
     <string name="details">Details</string>
     <string name="_16_day_weather_forecast">16 day weather forecast</string>
     <string name="search_button">Search button</string>
+    <string name="C">°C</string>
+    <string name="image_view">Image view</string>
 </resources>

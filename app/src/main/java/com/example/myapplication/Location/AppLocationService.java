@@ -15,6 +15,7 @@ import android.os.IBinder;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+@SuppressWarnings("StatementWithEmptyBody")
 public class AppLocationService extends Service implements LocationListener {
 
     private Activity activity;
@@ -40,13 +41,9 @@ public class AppLocationService extends Service implements LocationListener {
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                // Permission is not granted
-                // Should we show an explanation?
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                         Manifest.permission.READ_CONTACTS)) {
-                    // Show an explanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
+
                 } else {
                     // No explanation needed; request the permission
                     ActivityCompat.requestPermissions(activity,

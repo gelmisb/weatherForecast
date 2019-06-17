@@ -15,7 +15,7 @@ import java.net.URL;
 class HttpHandler {private static final String TAG = HttpHandler.class.getSimpleName();
 
     // Necessary empty constructor
-    protected HttpHandler() {}
+    HttpHandler() {}
 
     /**
      * The method takes care of making connection and getting the details
@@ -28,10 +28,8 @@ class HttpHandler {private static final String TAG = HttpHandler.class.getSimple
      *  - device compatibility and network availability
      *
      *
-     * @param reqUrl
-     * @return
      */
-    protected String makeServiceCall(String reqUrl) {
+    String makeServiceCall(String reqUrl) {
 
         // Nullifying the string
         String response = null;
@@ -78,8 +76,6 @@ class HttpHandler {private static final String TAG = HttpHandler.class.getSimple
      * This means converting the resulting query into a usable
      * form of strings
 
-     * @param is
-     * @return
      */
     private String convertStreamToString(InputStream is) {
 

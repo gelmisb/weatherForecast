@@ -1,5 +1,6 @@
 package com.example.myapplication.Controllers;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,15 +21,17 @@ import java.util.ArrayList;
 
 public class GetWeather extends AsyncTask<Void, Void, Void>  {
 
+    @SuppressLint("StaticFieldLeak")
     private Activity activity;
+    @SuppressLint("StaticFieldLeak")
     private Context context;
+    @SuppressLint("StaticFieldLeak")
+    private ListView listView;
     private String city, type;
     private double lat, lon;
-    private ListView listView;
     private ProgressDialog pDialog;
     private OnTaskCompleted taskCompleted;
     private Weather weather;
-
 
     // Overriding constructors - for 16  days forecast
     public GetWeather(Activity activity, Context context, String city, ListView listView, String type) {
@@ -55,12 +58,12 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
      */
 
     // Too many arrayLists - other option was HashSet<String, String, String, String, String> hashSet
-    ArrayList<String> currentArrayList = new ArrayList<>();
-    ArrayList<String> minTempArrayList = new ArrayList<>();
-    ArrayList<String> maxTempArrayList = new ArrayList<>();
-    ArrayList<String> descriptionArrayList = new ArrayList<>();
-    ArrayList<String> mainArrayList = new ArrayList<>();
-    ArrayList<String> imageArrayList = new ArrayList<>();
+    private ArrayList<String> currentArrayList = new ArrayList<>();
+    private ArrayList<String> minTempArrayList = new ArrayList<>();
+    private ArrayList<String> maxTempArrayList = new ArrayList<>();
+    private ArrayList<String> descriptionArrayList = new ArrayList<>();
+    private ArrayList<String> mainArrayList = new ArrayList<>();
+    private ArrayList<String> imageArrayList = new ArrayList<>();
 
 
     @Override
@@ -71,7 +74,6 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
         pDialog.show();
-        weather = new Weather();
     }
 
 
@@ -101,6 +103,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
                 try {
                     // Creating an initial JSON object from the retrieved results
                     JSONObject jsonObj = new JSONObject(jsonStr);
+                    weather = new Weather();
 
 
                     // --- WEATHER PARAMS ---
@@ -187,6 +190,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
                 try {
                     // Creating an initial JSON object from the retrieved results
                     JSONObject jsonObj = new JSONObject(jsonStr);
+                    weather = new Weather();
 
                     // Getting JSON Array node
                     JSONArray list = jsonObj.getJSONArray("list");
@@ -199,6 +203,7 @@ public class GetWeather extends AsyncTask<Void, Void, Void>  {
                         JSONObject temp = c.getJSONObject("temp");
 
                         // Retrieving strings from the JSONObject
+
                         String current = temp.getString("day");
                         String minTemp = temp.getString("min");
                         String maxTemp = temp.getString("max");

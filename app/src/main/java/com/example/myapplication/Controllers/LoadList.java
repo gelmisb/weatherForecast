@@ -1,5 +1,6 @@
 package com.example.myapplication.Controllers;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -28,6 +29,7 @@ import javax.crypto.spec.DESedeKeySpec;
 import static android.content.ContentValues.TAG;
 
 
+@SuppressWarnings("NullableProblems")
 public class LoadList extends ArrayAdapter<String> {
 
     private final Activity context;
@@ -39,15 +41,6 @@ public class LoadList extends ArrayAdapter<String> {
      * that are initialized with the local
      * variables to be executed
      *
-     *
-     * @param context
-     * @param degrees
-     * @param minTemp
-     * @param maxTemp
-     * @param mPhrase
-     * @param desc
-     * @param imageArray
-     * @param layout
      */
     public LoadList(Activity context, ArrayList<String>  degrees, ArrayList<String>  minTemp, ArrayList<String>  maxTemp, ArrayList<String>  mPhrase, ArrayList<String>  desc, ArrayList<String>  imageArray, int layout) {
         super(context, layout, degrees);
@@ -64,13 +57,14 @@ public class LoadList extends ArrayAdapter<String> {
 
     // getView will allow to push
     // the information into the views
-    public View getView(int position,View view,ViewGroup parent) {
+    @SuppressLint("SetTextI18n")
+    public View getView(int position, View view, ViewGroup parent) {
 
         // Inflating the layouts
         LayoutInflater inflater = context.getLayoutInflater();
 
         // Initialising the views for the layout
-        View rowView = inflater.inflate(layout, null,true);
+        @SuppressLint("ViewHolder") View rowView = inflater.inflate(layout, null,true);
 
         // Getting a reference of each of the view
         TextView degreesText =  rowView.findViewById(R.id.degreesText);
@@ -104,12 +98,12 @@ public class LoadList extends ArrayAdapter<String> {
             maxTempText.setText("H: " + maxTemp.get(position) + "°C");
             descriptionText.setText(desc.get(position));
 
-            SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd-MMM-yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd-MMM-yyyy");
             Calendar calendar = new GregorianCalendar();
             calendar.add(Calendar.DATE, position);
             String day = sdf.format(calendar.getTime());
             weekDay.setText(day);
-            
+
             // Used Picasso Library to download images, refactor images and to add them to imageViews
             Picasso.get()
                     .load("https://openweathermap.org/img/w/" + imageArray.get(position) + ".png")

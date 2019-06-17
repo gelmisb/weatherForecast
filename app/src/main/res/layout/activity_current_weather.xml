@@ -33,7 +33,7 @@
             android:layout_width="40dp"
             android:layout_height="@dimen/basic50"
             android:layout_weight="1"
-            android:background="@drawable/search"
+            android:background="@mipmap/search"
             android:contentDescription="@string/search_button"
             android:maxWidth="@dimen/basic50" />
     </LinearLayout>
@@ -84,7 +84,8 @@
                     android:text="@string/textview"
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/mediumFont" />
+                    android:textSize="@dimen/mediumFont"
+                    tools:ignore="RtlSymmetry" />
 
                 <TextView
                     android:id="@+id/dateText"
@@ -95,7 +96,8 @@
                     android:text="@string/textview"
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/mediumFont" />
+                    android:textSize="@dimen/mediumFont"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
         </LinearLayout>
@@ -150,7 +152,8 @@
             android:text="@string/textview"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/largeFont"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/country"
@@ -178,7 +181,8 @@
             android:layout_weight="2"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/basic10">
+            android:padding="@dimen/basic10"
+            tools:ignore="NestedWeights">
 
             <TextView
                 android:id="@+id/sunriseText"
@@ -190,7 +194,8 @@
                 android:text="@string/textview"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/mediumFont" />
+                android:textSize="@dimen/mediumFont"
+                tools:ignore="NestedWeights" />
 
             <TextView
                 android:id="@+id/sunsetText"

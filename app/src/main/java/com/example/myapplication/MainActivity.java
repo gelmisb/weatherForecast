@@ -6,17 +6,13 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myapplication.Controllers.GetWeather;
 
@@ -78,15 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void setWalls(String type) {
         if(type.contains("Rain")){
-            frameLayout.setBackgroundResource(R.drawable.rainy3);
+            frameLayout.setBackgroundResource(R.mipmap.rainy3);
         } else if(type.contains("Snow")){
-            frameLayout.setBackgroundResource(R.drawable.snowy);
+            frameLayout.setBackgroundResource(R.mipmap.snowy);
         } else if(type.contains("Clouds")) {
-            frameLayout.setBackgroundResource(R.drawable.cloudy2);
+            frameLayout.setBackgroundResource(R.mipmap.cloudy2);
         } else if(type.contains("Sun")) {
-            frameLayout.setBackgroundResource(R.drawable.sunny);
+            frameLayout.setBackgroundResource(R.mipmap.sunny);
         } else {
-            frameLayout.setBackgroundResource(R.drawable.default_weather);
+            frameLayout.setBackgroundResource(R.mipmap.default_weather);
         }
     }
 }
