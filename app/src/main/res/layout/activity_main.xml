@@ -27,11 +27,11 @@
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginStart="@dimen/basic30"
+        android:layout_marginLeft="@dimen/basic30"
+        android:layout_marginTop="@dimen/basic10"
+        android:layout_marginEnd="@dimen/basic30"
+        android:layout_marginRight="@dimen/basic30"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,18 +43,18 @@
             android:id="@+id/heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16 day weather forecast"
-            android:textColor="@android:color/background_light"
-            android:textSize="30sp" />
+            android:text="@string/_16_day_weather_forecast"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/mediumLargeFont" />
 
         <TextView
             android:id="@+id/cityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/textview"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            android:textColor="@android:color/background_light"
-            android:textSize="45sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/largeFont"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -62,7 +62,6 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

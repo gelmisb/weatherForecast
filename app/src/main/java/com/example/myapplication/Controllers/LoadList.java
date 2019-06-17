@@ -1,6 +1,8 @@
 package com.example.myapplication.Controllers;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import com.example.myapplication.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import javax.crypto.spec.DESedeKeySpec;
 
 
 public class LoadList extends ArrayAdapter<String> {
@@ -65,6 +69,19 @@ public class LoadList extends ArrayAdapter<String> {
         TextView maxTempText =  rowView.findViewById(R.id.maxTemp);
         TextView descriptionText =  rowView.findViewById(R.id.description);
         ImageView imageView = rowView.findViewById(R.id.profile);
+
+        Typeface face = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Regular.ttf");
+        degreesText.setTypeface(face);
+        phraseText.setTypeface(face);
+        minTempText.setTypeface(face);
+        maxTempText.setTypeface(face);
+        descriptionText.setTypeface(face);
+
+        degreesText.setShadowLayer(2, 5, 5, Color.BLACK);
+        phraseText.setShadowLayer(2, 5, 5, Color.BLACK);
+        minTempText.setShadowLayer(2, 5, 5, Color.BLACK);
+        maxTempText.setShadowLayer(2, 5, 5, Color.BLACK);
+        descriptionText.setShadowLayer(2, 5, 5, Color.BLACK);
 
         // Making sure the main information is there
         if(degrees.get(position) != null){

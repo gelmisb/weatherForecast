@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -25,7 +24,7 @@ import android.widget.TextView;
 import com.example.myapplication.Controllers.GetWeather;
 import com.example.myapplication.Controllers.LoadData;
 import com.example.myapplication.Location.AppLocationService;
-import com.example.myapplication.Model.OnTaskCompleted;
+import com.example.myapplication.Interfaces.OnTaskCompleted;
 import com.example.myapplication.Model.Weather;
 
 import java.text.SimpleDateFormat;

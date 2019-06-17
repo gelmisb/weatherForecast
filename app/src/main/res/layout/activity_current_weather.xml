@@ -27,23 +27,23 @@
         android:id="@+id/cityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="@dimen/basic100"
         android:hint="@string/enter_city"
-        android:paddingLeft="100dp"
-        android:paddingRight="100dp"
+        android:paddingLeft="@dimen/basic100"
+        android:paddingRight="@dimen/basic100"
         android:textColor="#FFFFFF"
         android:textColorHint="@android:color/background_light"
-        android:textSize="30sp"
+        android:textSize="@dimen/mediumLargeFont"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/frameLayoutBase" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/basic10"
+        android:layout_marginBottom="@dimen/basic10"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textview"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textview"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp" />
     </LinearLayout>
 
@@ -72,7 +72,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="@dimen/basic100"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,10 +90,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingRight="15dp"
-                android:text="13asd"
-                android:textColor="#FFFFFF"
-                android:textSize="100sp"
+                android:paddingRight="@dimen/basic10"
+                android:text="@string/textview"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/hugeFont"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -109,22 +109,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
 
             <TextView
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="@dimen/basic10"
+                android:layout_marginEnd="@dimen/basic10"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -134,8 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/textview"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/mediumFont" />
 
                 <TextView
                     android:id="@+id/dateText"
@@ -143,8 +143,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/textview"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/mediumFont" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -153,12 +153,12 @@
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/basic30"
+        android:layout_marginLeft="@dimen/basic30"
+        android:layout_marginTop="@dimen/basic10"
+        android:layout_marginEnd="@dimen/basic30"
+        android:layout_marginRight="@dimen/basic30"
+        android:layout_marginBottom="@dimen/basic10"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayoutBase"
         app:layout_constraintEnd_toEndOf="parent"
@@ -171,18 +171,18 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="@dimen/basic10">
 
             <TextView
                 android:id="@+id/sunriseText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginEnd="@dimen/basic30"
+                android:layout_marginRight="@dimen/basic30"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
 
             <TextView
                 android:id="@+id/sunsetText"
@@ -190,8 +190,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
 
         </LinearLayout>
 
@@ -201,17 +201,17 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="@dimen/basic10">
 
             <TextView
                 android:id="@+id/pressureText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/basic10"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
 
             <TextView
                 android:id="@+id/windText"
@@ -219,8 +219,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
         </LinearLayout>
 
         <LinearLayout
@@ -229,18 +229,18 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="@dimen/basic10">
 
             <TextView
                 android:id="@+id/cloudinessText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/basic30"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:layout_marginEnd="20dp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont"
+                android:layout_marginEnd="@dimen/basic30" />
 
             <TextView
                 android:id="@+id/humidityText"
@@ -248,8 +248,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
         </LinearLayout>
 
         <LinearLayout
@@ -257,17 +257,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp">
+            android:padding="@dimen/basic10">
 
             <TextView
                 android:id="@+id/minTempText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/basic30"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
 
             <TextView
                 android:id="@+id/maxTempText"
@@ -275,8 +275,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/textview"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/mediumFont" />
 
         </LinearLayout>
     </LinearLayout>

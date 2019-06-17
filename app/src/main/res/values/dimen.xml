@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="basic10">10dp</dimen>
+    <dimen name="basic30">30dp</dimen>
+    <dimen name="basic50">50dp</dimen>
+    <dimen name="basic100">100dp</dimen>
+
+    <dimen name="normalFont">14sp</dimen>
+    <dimen name="mediumFont">24sp</dimen>
+    <dimen name="mediumLargeFont">30sp</dimen>
+    <dimen name="semilargeFont">35sp</dimen>
+    <dimen name="largeFont">45sp</dimen>
+    <dimen name="hugeFont">100sp</dimen>
+</resources>
